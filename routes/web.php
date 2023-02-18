@@ -19,6 +19,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/apps', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::group(['prefix' => 'cms'], function () {
+
+  /*CMS*/ /*INICIO*/
+  Route::get('/', [App\Http\Controllers\CmsController::class, 'index']);
+
+  Route::get('/diseno', [App\Http\Controllers\CmsController::class, 'diseno']);
+
+  Route::match(['post','get'],'/prensa', [App\Http\Controllers\CmsController::class, 'prensa']);
+
+  Route::get('/prensa/crear', [App\Http\Controllers\CmsController::class, 'prensaCrear']);
+
+});
+
 
 Route::post('/form', [App\Http\Controllers\HomeController::class, 'form']);
