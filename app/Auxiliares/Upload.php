@@ -2,6 +2,27 @@
 
 class Upload {
 
+  private static function crear($ruta){
+
+    if(!is_dir($ruta))
+    {
+      mkdir($ruta,0755,true);
+    }
+
+    return $ruta;
+  }
+
+  private static function ruta($carpeta){
+
+    $ruta = self::crear($carpeta."/");
+
+    return $ruta;
+  }
+
+  public static function ruta_noticias(){
+
+    return self::ruta('noticias');
+  }
 
   //////////////////////////////////////////////////////////////
   ////////////////IMAGEN
@@ -10,7 +31,7 @@ class Upload {
 
     if($foto)
     {
-      $ruta = self::ruta_img();
+      $ruta = self::ruta_noticias();
 
       $imagen = \Image::make($foto);
 

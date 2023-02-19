@@ -31,11 +31,20 @@ class CmsController extends Controller
 
 
     if($request->method() == "POST")
-    { dd($request->input('img1'));
+    {
       $datos = [
-                "titulo"   => $request->input('titulo'),
-                "img1"     => Upload::imagen($request->input('img1'), 'noticia', 'l'),
-                "extracto" => $request->input('extracto'),
+                "titulo"    => $request->input('titulo'),
+                "fecha"     => $request->input('fecha'),
+                "extracto"  => $request->input('extracto'),
+                "contenido" => $request->input('contenido'),
+                "imagenes"  => array('1' => Upload::imagen($request->file('img1'), 'noticia', 'l'),
+                                     '2' => Upload::imagen($request->file('img2'), 'noticia', '2'),
+                                     '3' => Upload::imagen($request->file('img3'), 'noticia', '3'),
+                                     '4' => Upload::imagen($request->file('img4'), 'noticia', '4'),
+                                     '5' => Upload::imagen($request->file('img5'), 'noticia', '5'),
+                                     '6' => Upload::imagen($request->file('img6'), 'noticia', '6'),
+                                     '7' => Upload::imagen($request->file('img7'), 'noticia', '7'),
+                                    ),
               ];
 
       $this->mongo($datos);
