@@ -57,30 +57,30 @@
         @foreach($noticias as $noticia)
         <tr>
           <td class="text-center">
-            @if($noticia->img1)
-              <img src="{{ asset($ruta->ruta_img().$noticia->img1) }}" width="130" alt="{{ $noticia->titulo }}" class="img-thumbnail">
+            @if($noticia['imagenes']['1'])
+              <img src="{{ asset($noticia['imagenes']['1']) }}" width="130" alt="{{ $noticia['titulo'] }}" class="img-thumbnail">
             @else
-              <img src="{{ asset('app/img/otras/'.'no.jpg') }}" width="130" alt="{{ $noticia->titulo }}" class="img-thumbnail">
+              <img src="{{ asset('app/img/otras/'.'no.jpg') }}" width="130" alt="{{ $noticia['titulo'] }}" class="img-thumbnail">
             @endif
           </td>
           <td>
-            <strong>{{ $noticia->titulo }}</strong>
+            <strong>{{ $noticia['titulo'] }}</strong>
           </td>
           <td class="text-center">
-            <strong>{!! $noticia->View['tipo'] !!}</strong>
+            <strong></strong>
           </td>
           <td class="text-center">
-            <strong>@dMy($noticia->fecha)</strong>
+            <strong>@dMy($noticia['fecha'])</strong>
           </td>
           <td class="text-center">
             <ul class="panel-controls text-center">
               <li>
-                <a tabindex="4" data-toggle="tooltip" data-placement="top" data-original-title="Editar" class="control-warning" href="{{ url('/cms/prensa/'.$noticia->id.'/edit') }}">
+                <a tabindex="4" data-toggle="tooltip" data-placement="top" data-original-title="Editar" class="control-warning" href="{{ url('/cms/prensa/'.$noticia['_id'].'/edit') }}">
                   <span class="far fa-pencil-alt"></span>
                 </a>
               </li>
               <li>
-                <a tabindex="{{ ++$tabindex }}" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" class="control-danger mb-control" data-box="#mb-{{ $noticia->id }}">
+                <a tabindex="{{ ++$tabindex }}" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" class="control-danger mb-control" data-box="#mb-{{ $noticia['_id'] }}">
                   <span class="fa fa-times"></span>
                 </a>
               </li>
@@ -97,7 +97,7 @@
 
 
 @foreach($noticias as $noticia)
-  <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-{{ $noticia->id }}">
+  <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-{{ $noticia['_id'] }}">
     <div class="mb-container">
       <div class="mb-middle">
         <div class="mb-title"><span class="fa fa fa-times"></span>¿ Borrar <strong>Noticia</strong> ?</div>
@@ -106,7 +106,7 @@
         </div>
         <div class="mb-footer">
           <div class="pull-right">
-            <form action="{{ url('cms/prensa/'.$noticia->id) }}" method="POST">
+            <form action="{{ url('cms/prensa/'.$noticia['_id']) }}" method="POST">
               <input name="_method" type="hidden" value="DELETE">
               <input name="_token"  type="hidden" value="{{ csrf_token() }}">
               <button class="btn btn-success btn-lg" type="submit">Sí</button>

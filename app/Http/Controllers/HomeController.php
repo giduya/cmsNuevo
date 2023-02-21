@@ -17,20 +17,4 @@ class HomeController extends Controller
     return view('apps');
   }
 
-
-
-  public function form(request $request)
-  {
-
-
-                if ($response->failed()) {
-                   // return failure
-                } else {
-                   // return success
-                }
-echo "<pre>";
-print_r($response);
-echo "</pre>";
-  }///////////
-
 }
