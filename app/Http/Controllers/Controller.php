@@ -23,6 +23,15 @@ class Controller extends BaseController
         case 'F':
           $i = 'find';
           break;
+        case 'O':
+          $i = 'findOne';
+          break;
+        case 'D':
+          $i = 'deleteOne';
+          break;
+        case 'U':
+          $i = 'updateOne';
+          break;
       }
 
       $bd = ["dataSource" => "Cluster0",

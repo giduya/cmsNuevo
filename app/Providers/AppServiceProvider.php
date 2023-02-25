@@ -1,8 +1,9 @@
-<?php
-
-namespace App\Providers;
+<?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Blade;
+
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +25,19 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
       view()->share('tabindex', 0);
+
+      Blade::directive('dMy', function($fecha){
+            return "<?php
+              if($fecha)
+              {
+                echo \Date::parse($fecha)->format('d-M-y');
+              }
+            ?>"; //12-dic-17
+      });
+
+      Blade::directive('dmY', function($fecha){
+        return "<?php if($fecha){ echo \Date::parse($fecha)->format('d-m-Y'); } ?>"; //12-01-2012
+      });
+
     }
 }

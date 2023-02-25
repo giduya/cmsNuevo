@@ -22,11 +22,11 @@
   <p>Los campos marcados con <code>*</code> son obligatorios.</p>
 </div>
 <div class="panel-body form-group-separated">
-  <form id="validate" name="validate" class="form-horizontal" autocomplete="off" action="{{ url('cms/prensa/') }}@if(isset($noticia->id))/{{ $noticia->id }}@endif" method="POST" enctype="multipart/form-data">
+  <form id="validate" name="validate" class="form-horizontal" autocomplete="off" action="{{ url('cms/prensa/') }}@if(isset($noticia['_id']))/{{ $noticia['_id'] }}@endif" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="tipo" value="{{ $tipo }}">
 
-    @if(isset($noticia->id))
+    @if(isset($noticia['_id']))
     <input type="hidden" name="_method" value="PATCH">
     @endif
 
@@ -38,7 +38,7 @@
       <div class="col-md-8 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="far fa-font"></span></span>
-          <input id="titulo" tabindex="{{ ++$tabindex }}" maxlength="100" type="text" class="validate[required,maxSize[100]] form-control" value="@if(isset($noticia->titulo)){{ $noticia->titulo }}@else{{ old('titulo') }}@endif" autofocus="autofocus" name="titulo">
+          <input id="titulo" tabindex="{{ ++$tabindex }}" maxlength="100" type="text" class="validate[required,maxSize[100]] form-control" value="@if(isset($noticia['titulo'])){{ $noticia['titulo'] }}@else{{ old('titulo') }}@endif" autofocus="autofocus" name="titulo">
         </div><!--input-group-->
       </div><!--col-md-8-->
     </div><!--form-group-->
@@ -53,9 +53,9 @@
           <input id="imagen_1" tabindex="{{ ++$tabindex }}" class="fileinput" type="file" name="img1" accept="image/*">
         </div><!--input-group-->
 
-        @if(isset($noticia->img1))
+        @if(isset($noticia['imagenes']['1']))
         <span class="help-block text-center" style="max-width:250px">
-          <img src="{{ asset($ruta->ruta_img().$noticia->img1) }}" alt="" width="150" class="img-thumbnail">
+          <img src="{{ asset('noticias/'.$noticia['imagenes']['1']) }}" alt="" width="150" class="img-thumbnail">
           <br>
           <button type="button" class="btn btn-danger btn-default btn-condensed btn-sm mb-control" style="margin 5px 100px 0px 100px !important" data-box="#mb-img1">Borrar</button>
         </span>
@@ -73,7 +73,7 @@
       <div class="col-md-2 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="far fa-calendar-alt"></span></span>
-          <input id="fecha" tabindex="{{ ++$tabindex }}" placeholder="DD/MM/AAAA" type="text" class="validate[required,custom[date]] form-control datepicker" name="fecha" value="@if(isset($noticia->fecha))@dmY($noticia->fecha)@else{{ old('fecha') }}@endif">
+          <input id="fecha" tabindex="{{ ++$tabindex }}" placeholder="DD/MM/AAAA" type="text" class="validate[required,custom[date]] form-control datepicker" name="fecha" value="@if(isset($noticia['fecha']))@dmY($noticia['fecha'])@else{{ old('fecha') }}@endif">
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@
         <code>*</code>
       </label>
       <div class="col-md-8 col-xs-12">
-        <textarea id="extracto" tabindex="{{ ++$tabindex }}" rows="6" name="extracto" maxlength="5000" class="validate[required,maxSize[5000]] form-control">@if(isset($noticia->extracto)){{ $noticia->extracto }}@else{{ old('extracto') }}@endif</textarea>
+        <textarea id="extracto" tabindex="{{ ++$tabindex }}" rows="6" name="extracto" maxlength="5000" class="validate[required,maxSize[5000]] form-control">@if(isset($noticia['extracto'])){{ $noticia['extracto'] }}@else{{ old('extracto') }}@endif</textarea>
         <span class="help-block"><code>Agrega el primer parrafo de tu noticia o la introducción a la noticia.</code></span>
       </div><!--col-md-6-->
     </div><!--form-group-->
@@ -249,7 +249,7 @@
         <code>*</code>
       </label>
       <div class="col-md-8 col-xs-12">
-        <textarea id="noticia" tabindex="{{ ++$tabindex }}" rows="18" name="contenido" class="validate[required] form-control">@if(isset($noticia->contenido)){{ $noticia->contenido }}@else{{ old('contenido') }}@endif</textarea>
+        <textarea id="noticia" tabindex="{{ ++$tabindex }}" rows="18" name="contenido" class="validate[required] form-control">@if(isset($noticia['contenido'])){{ $noticia['contenido'] }}@else{{ old('contenido') }}@endif</textarea>
       </div><!--col-md-6-->
     </div><!--form-group-->
 
@@ -261,10 +261,10 @@
       </label>
       <div class="col-md-8 col-xs-12">
         <div class="input-group">
-          <span class="input-group-addon"><span class="fab fa-youtube"></span></span>
-          <input id="link_1" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia->link_1)){{ $noticia->link_1 }}@else{{ old('link1') }}@endif" name="link1" maxlength="255" type="text" class="validate[custom[url],maxSize[255]] form-control">
+          <span class="input-group-addon"><span class="fa fa-link"></span></span>
+          <input id="link_1" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['links']['1'])){{ $noticia['links']['1'] }}@else{{ old('link1') }}@endif" name="link1" maxlength="255" type="text" class="validate[custom[url],maxSize[255]] form-control">
         </div><!--input-group-->
-        @if(isset($noticia->link1))
+        @if(isset($noticia['links']['1']))
         <span class="help-block">
 
         </span>
@@ -274,14 +274,14 @@
 
     <div class="form-group">
       <label for="link_2" class="col-md-2 col-xs-12 control-label">
-        Link 1:
+        Link 2:
       </label>
       <div class="col-md-8 col-xs-12">
         <div class="input-group">
-          <span class="input-group-addon"><span class="fab fa-youtube"></span></span>
-          <input id="link_2" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia->link_2)){{ $noticia->link_2 }}@else{{ old('link2') }}@endif" name="link2" maxlength="255" type="text" class="validate[custom[url],maxSize[255]] form-control">
+          <span class="input-group-addon"><span class="fa fa-link"></span></span>
+          <input id="link_2" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['links']['2'])){{ $noticia['links']['2'] }}@else{{ old('link2') }}@endif" name="link2" maxlength="255" type="text" class="validate[custom[url],maxSize[255]] form-control">
         </div><!--input-group-->
-        @if(isset($noticia->link2))
+        @if(isset($noticia['links']['2']))
         <span class="help-block">
 
         </span>
@@ -290,15 +290,15 @@
     </div><!--form-group-->
 
     <div class="form-group">
-      <label for="link_1" class="col-md-2 col-xs-12 control-label">
+      <label for="link_3" class="col-md-2 col-xs-12 control-label">
         Link 3:
       </label>
       <div class="col-md-8 col-xs-12">
         <div class="input-group">
-          <span class="input-group-addon"><span class="fab fa-youtube"></span></span>
-          <input id="link_3" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia->link_3)){{ $noticia->link_3 }}@else{{ old('link3') }}@endif" name="link3" maxlength="255" type="text" class="validate[custom[url],maxSize[255]] form-control">
+          <span class="input-group-addon"><span class="fa fa-link"></span></span>
+          <input id="link_3" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['links']['3'])){{ $noticia['links']['3'] }}@else{{ old('link3') }}@endif" name="link3" maxlength="255" type="text" class="validate[custom[url],maxSize[255]] form-control">
         </div><!--input-group-->
-        @if(isset($noticia->link3))
+        @if(isset($noticia['links']['3']))
         <span class="help-block">
 
         </span>
@@ -353,10 +353,6 @@
     </div><!--form-group-->
 
 
-
-
-
-
     <div class="form-group">
       <label class="col-md-2 col-xs-12 control-label">
         Imagenes Secundarias:
@@ -365,9 +361,9 @@
         <div class="input-group">
           <input id="imagen_2" tabindex="{{ ++$tabindex }}" type="file" class="fileinput" title="Foto 1:" name="img2" accept="image/*">
         </div><!--input-group-->
-        @if(isset($noticia->img2))
+        @if(isset($noticia['imagenes']['2']))
         <span class="help-block text-center" style="max-width:250px">
-          <img src="{{ asset($ruta->ruta_img().$noticia->img2) }}" width="150" alt="" class="img-thumbnail">
+          <img src="{{ asset('noticias/'.$noticia['imagenes']['2']) }}" width="150" alt="" class="img-thumbnail">
           <br>
           <button type="button" class="btn btn-danger btn-default btn-condensed btn-sm mb-control" style="margin 5px 100px 0px 100px !important" data-box="#mb-img2">Borrar</button>
         </span>
@@ -377,9 +373,9 @@
         <div class="input-group">
           <input id="imagen_3" tabindex="{{ ++$tabindex }}" type="file" class="fileinput" title="Foto 2:" name="img3" accept="image/*">
         </div><!--input-group-->
-        @if(isset($noticia->img3))
+        @if(isset($noticia['imagenes']['3']))
         <span class="help-block text-center" style="max-width:250px">
-          <img src="{{ asset($ruta->ruta_img().$noticia->img3) }}" width="150" alt="" class="img-thumbnail">
+          <img src="{{ asset('noticias/'.$noticia['imagenes']['3']) }}" width="150" alt="" class="img-thumbnail">
           <br>
           <button type="button" class="btn btn-danger btn-default btn-condensed btn-sm mb-control" style="margin 5px 100px 0px 100px !important" data-box="#mb-img3">Borrar</button>
         </span>
@@ -389,9 +385,9 @@
         <div class="input-group">
           <input id="imagen_4" tabindex="{{ ++$tabindex }}" type="file" class="fileinput" title="Foto 3:" name="img4" accept="image/*">
         </div><!--input-group-->
-        @if(isset($noticia->img4))
+        @if(isset($noticia['imagenes']['4']))
         <span class="help-block text-center" style="max-width:250px">
-          <img src="{{ asset($ruta->ruta_img().$noticia->img4) }}" width="150" alt="" class="img-thumbnail">
+          <img src="{{ asset('noticias/'.$noticia['imagenes']['4']) }}" width="150" alt="" class="img-thumbnail">
           <br>
           <button type="button" class="btn btn-danger btn-default btn-condensed btn-sm mb-control" style="margin 5px 100px 0px 100px !important" data-box="#mb-img4">Borrar</button>
         </span>
@@ -407,9 +403,9 @@
         <div class="input-group">
           <input id="imagen_5" tabindex="{{ ++$tabindex }}" type="file" class="fileinput" title="Foto 4:" name="img5" accept="image/*">
         </div><!--input-group-->
-        @if(isset($noticia->img5))
+        @if(isset($noticia['imagenes']['5']))
         <span class="help-block text-center" style="max-width:250px">
-          <img src="{{ asset($ruta->ruta_img().$noticia->img5) }}" width="150" alt="" class="img-thumbnail">
+          <img src="{{ asset('noticias/'.$noticia['imagenes']['5']) }}" width="150" alt="" class="img-thumbnail">
           <br>
           <button type="button" class="btn btn-danger btn-default btn-condensed btn-sm mb-control" style="margin 5px 100px 0px 100px !important" data-box="#mb-img5">Borrar</button>
         </span>
@@ -419,9 +415,9 @@
         <div class="input-group">
           <input id="imagen_6" tabindex="{{ ++$tabindex }}" type="file" class="fileinput" title="Foto 5:" name="img6" accept="image/*">
         </div><!--input-group-->
-        @if(isset($noticia->img6))
+        @if(isset($noticia['imagenes']['6']))
         <span class="help-block text-center" style="max-width:250px">
-          <img src="{{ asset($ruta->ruta_img().$noticia->img6) }}" alt="" width="150" class="img-thumbnail">
+          <img src="{{ asset('noticias/'.$noticia['imagenes']['6']) }}" alt="" width="150" class="img-thumbnail">
           <br>
           <button type="button" class="btn btn-danger btn-default btn-condensed btn-sm mb-control" style="margin 5px 100px 0px 100px !important" data-box="#mb-img6">Borrar</button>
         </span>
@@ -431,9 +427,9 @@
         <div class="input-group">
           <input id="imagen_7" tabindex="{{ ++$tabindex }}" type="file" class="fileinput" title="Foto 6:" name="img7" accept="image/*">
         </div><!--input-group-->
-        @if(isset($noticia->img7))
+        @if(isset($noticia['imagenes']['7']))
         <span class="help-block text-center" style="max-width:250px">
-          <img src="{{ asset($ruta->ruta_img().$noticia->img7) }}" alt="" width="150" class="img-thumbnail">
+          <img src="{{ asset('noticias/'.$noticia['imagenes']['7']) }}" alt="" width="150" class="img-thumbnail">
           <br>
           <button type="button" class="btn btn-danger btn-default btn-condensed btn-sm mb-control" style="margin 5px 100px 0px 100px !important" data-box="#mb-img7">Borrar</button>
         </span>
@@ -441,19 +437,10 @@
       </div><!--col-md-6-->
     </div><!--form-group-->
 
-
-    <div class="form-group">
-      <label tabindex="{{ ++$tabindex }}" for="tags_tag" class="col-md-2 col-xs-12 control-label">Tags</label>
-      <div class="col-md-8 col-xs-12">
-        <input id="tags" tabindex="{{ ++$tabindex }}" type="text" name="tags" class="tagsinput" value="@if(isset($noticia)) @foreach($noticia->tags as $tag){{ $tag->tag }}, @endforeach @endif"/>
-        <span class="help-block"><code>Las TAGS son palabras que permiten a una noticia ser encontrada en Buscadores, separalas por comas: rojo, verde, azul,</code> <span class="label label-primary">rojo</span>&nbsp;<span class="label label-primary">verde</span>&nbsp;<span class="label label-primary">azul</span></span>
-      </div>
-    </div>
-
   </form><!--form-->
 </div><!--panel body-->
 
-@if(isset($noticia->img1))
+@if(isset($noticia['imagenes']['1']))
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-img1">
   <div class="mb-container">
     <div class="mb-middle">
@@ -463,7 +450,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/prensa/'.$noticia->id.'/img/1') }}" method="POST">
+          <form action="{{ url('cms/prensa/'.$noticia['_id'].'/img/1') }}" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <input name="_token"  type="hidden" value="{{ csrf_token() }}">
             <button class="btn btn-success btn-lg" type="submit">Sí</button>
@@ -477,7 +464,7 @@
 @endif
 
 
-@if(isset($noticia->img2))
+@if(isset($noticia['imagenes']['2']))
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-img2">
   <div class="mb-container">
     <div class="mb-middle">
@@ -487,7 +474,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/prensa/'.$noticia->id.'/img/2') }}" method="POST">
+          <form action="{{ url('cms/prensa/'.$noticia['_id'].'/img/2') }}" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <input name="_token"  type="hidden" value="{{ csrf_token() }}">
             <button class="btn btn-success btn-lg" type="submit">Sí</button>
@@ -501,7 +488,7 @@
 @endif
 
 
-@if(isset($noticia->img3))
+@if(isset($noticia['imagenes']['3']))
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-img3">
   <div class="mb-container">
     <div class="mb-middle">
@@ -511,7 +498,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/prensa/'.$noticia->id.'/img/3') }}" method="POST">
+          <form action="{{ url('cms/prensa/'.$noticia['_id'].'/img/3') }}" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <input name="_token"  type="hidden" value="{{ csrf_token() }}">
             <button class="btn btn-success btn-lg" type="submit">Sí</button>
@@ -525,7 +512,7 @@
 @endif
 
 
-@if(isset($noticia->img4))
+@if(isset($noticia['imagenes']['4']))
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-img4">
   <div class="mb-container">
     <div class="mb-middle">
@@ -535,7 +522,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/prensa/'.$noticia->id.'/img/4') }}" method="POST">
+          <form action="{{ url('cms/prensa/'.$noticia['_id'].'/img/4') }}" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <input name="_token"  type="hidden" value="{{ csrf_token() }}">
             <button class="btn btn-success btn-lg" type="submit">Sí</button>
@@ -549,7 +536,7 @@
 @endif
 
 
-@if(isset($noticia->img5))
+@if(isset($noticia['imagenes']['5']))
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-img5">
   <div class="mb-container">
     <div class="mb-middle">
@@ -559,7 +546,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/prensa/'.$noticia->id.'/img/5') }}" method="POST">
+          <form action="{{ url('cms/prensa/'.$noticia['_id'].'/img/5') }}" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <input name="_token"  type="hidden" value="{{ csrf_token() }}">
             <button class="btn btn-success btn-lg" type="submit">Sí</button>
@@ -573,7 +560,7 @@
 @endif
 
 
-@if(isset($noticia->img6))
+@if(isset($noticia['imagenes']['6']))
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-img6">
   <div class="mb-container">
     <div class="mb-middle">
@@ -583,7 +570,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/prensa/'.$noticia->id.'/img/6') }}" method="POST">
+          <form action="{{ url('cms/prensa/'.$noticia['_id'].'/img/6') }}" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <input name="_token"  type="hidden" value="{{ csrf_token() }}">
             <button class="btn btn-success btn-lg" type="submit">Sí</button>
@@ -597,7 +584,7 @@
 @endif
 
 
-@if(isset($noticia->img7))
+@if(isset($noticia['imagenes']['7']))
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-img7">
   <div class="mb-container">
     <div class="mb-middle">
@@ -607,7 +594,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/prensa/'.$noticia->id.'/img/7') }}" method="POST">
+          <form action="{{ url('cms/prensa/'.$noticia['_id'].'/img/7') }}" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <input name="_token"  type="hidden" value="{{ csrf_token() }}">
             <button class="btn btn-success btn-lg" type="submit">Sí</button>

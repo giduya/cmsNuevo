@@ -57,8 +57,11 @@
         @foreach($noticias as $noticia)
         <tr>
           <td class="text-center">
+            <input type="checkbox" name="noticia[]" value="$noticia['_id']">
+          </td>
+          <td class="text-center">
             @if($noticia['imagenes']['1'])
-              <img src="{{ asset($noticia['imagenes']['1']) }}" width="130" alt="{{ $noticia['titulo'] }}" class="img-thumbnail">
+              <img src="{{ asset('noticias/'.$noticia['imagenes']['1']) }}" width="130" alt="{{ $noticia['titulo'] }}" class="img-thumbnail">
             @else
               <img src="{{ asset('app/img/otras/'.'no.jpg') }}" width="130" alt="{{ $noticia['titulo'] }}" class="img-thumbnail">
             @endif
@@ -67,7 +70,13 @@
             <strong>{{ $noticia['titulo'] }}</strong>
           </td>
           <td class="text-center">
-            <strong></strong>
+            @if($noticia['tipo'] == "Texto")
+            <strong><span class="btn btn-primary"><i class="far fa-font"></i> &nbsp;Texto</span></strong>
+            @elseif($noticia['tipo'] == "Audio")
+            <strong><span class="btn btn-primary"><i class="far fa-font"></i> &nbsp;Audio</span></strong>
+            @elseif($noticia['tipo'] == "Video")
+            <strong><span class="btn btn-primary"><i class="far fa-font"></i> &nbsp;Vídeo</span></strong>
+            @endif
           </td>
           <td class="text-center">
             <strong>@dMy($noticia['fecha'])</strong>
@@ -75,7 +84,7 @@
           <td class="text-center">
             <ul class="panel-controls text-center">
               <li>
-                <a tabindex="4" data-toggle="tooltip" data-placement="top" data-original-title="Editar" class="control-warning" href="{{ url('/cms/prensa/'.$noticia['_id'].'/edit') }}">
+                <a tabindex="4" data-toggle="tooltip" data-placement="top" data-original-title="Editar" class="control-warning" href="{{ url('/cms/prensa/'.$noticia['_id']) }}">
                   <span class="far fa-pencil-alt"></span>
                 </a>
               </li>
