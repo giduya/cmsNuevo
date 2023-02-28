@@ -27,6 +27,24 @@ class Upload {
   //////////////////////////////////////////////////////////////
   ////////////////IMAGEN
   //////////////////////////////////////////////////////////////
+  public static function mp3($mp3){
+    if($mp3)
+    {
+        $nombre = date("Y")."_".date("n")."_".date("j")."_".microtime(true).".mp3";
+
+        $mp3->move(self::ruta_noticias("audio"),$nombre);
+
+        return $nombre;
+    }
+    else
+    {
+        return null;
+    }
+  }
+
+  //////////////////////////////////////////////////////////////
+  ////////////////IMAGEN
+  //////////////////////////////////////////////////////////////
   public static function imagen($foto, $prefijo, $dimension = null){
 
     if($foto)

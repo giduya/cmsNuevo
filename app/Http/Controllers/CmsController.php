@@ -67,36 +67,71 @@ class CmsController extends Controller
 
     if($request->method() == "POST" or $request->method() == "PATCH")
     {
-      $accion = ($request->method() == "POST") ? "I" : "U";
+        $doc = ["collection" => 'noticias',
+                "filter"     => ['_id' => [ "\$oid" => $request->route()->noticiaId ]]];
 
-      $document = [
-                   "titulo"    => $request->input('titulo'),
-                   "fecha"     => [ "\$date" => [ "\$numberLong" => "1638551310749" ] ],
-                   "extracto"  => $request->input('extracto'),
-                   "contenido" => $request->input('contenido'),
-                   "tipo"      => $request->input('tipo'),
-                   "links"     => array('1' => $request->input('link1'),
-                                        '2' => $request->input('link2'),
-                                        '3' => $request->input('link3'),
-                                       ),
-                   "imagenes"  => array('1' => Upload::imagen($request->file('img1'), 'noticia', 'l'),
-                                        '2' => Upload::imagen($request->file('img2'), 'noticia', '2'),
-                                        '3' => Upload::imagen($request->file('img3'), 'noticia', '3'),
-                                        '4' => Upload::imagen($request->file('img4'), 'noticia', '4'),
-                                        '5' => Upload::imagen($request->file('img5'), 'noticia', '5'),
-                                        '6' => Upload::imagen($request->file('img6'), 'noticia', '6'),
-                                        '7' => Upload::imagen($request->file('img7'), 'noticia', '7'),
-                                       ),
-                   "descargas" => array('1' => $request->input('file1'),
-                                        '2' => $request->input('file2'),
-                                        '3' => $request->input('file3'),
-                                       ),
+        $doc = $this->mongo($doc,"O");
+
+        $fecha = strval(strtotime($request->input('fecha').' 00:00:00')*1000);
+
+        $document = [
+                        "titulo"    => $request->input('titulo'),
+                        "fecha"     => [ "\$date" => [ "\$numberLong" => $fecha]],
+                        "extracto"  => $request->input('extracto'),
+                        "contenido" => $request->input('contenido'),
+                        "tipo"      => (is_null($request->input('tipo'))) ? "Texto" : $request->input('tipo'),
+                        "links"     => array(   '1' => $request->input('link1'),
+                                                '2' => $request->input('link2'),
+                                                '3' => $request->input('link3'),
+                                            ),
+                        "imagenes"  => array(   '1' => (is_null($request->file('img1'))) ? (isset($doc['document']['imagenes']['1'])) ? $doc['document']['imagenes']['1'] : null : Upload::imagen($request->file('img1'), 'noticia', 'l'),
+                                                '2' => (is_null($request->file('img2'))) ? (isset($doc['document']['imagenes']['2'])) ? $doc['document']['imagenes']['2'] : null : Upload::imagen($request->file('img2'), 'noticia', 'l'),
+                                                '3' => (is_null($request->file('img3'))) ? (isset($doc['document']['imagenes']['3'])) ? $doc['document']['imagenes']['3'] : null : Upload::imagen($request->file('img3'), 'noticia', 'l'),
+                                                '4' => (is_null($request->file('img4'))) ? (isset($doc['document']['imagenes']['4'])) ? $doc['document']['imagenes']['4'] : null : Upload::imagen($request->file('img4'), 'noticia', 'l'),
+                                                '5' => (is_null($request->file('img5'))) ? (isset($doc['document']['imagenes']['5'])) ? $doc['document']['imagenes']['5'] : null : Upload::imagen($request->file('img5'), 'noticia', 'l'),
+                                                '6' => (is_null($request->file('img6'))) ? (isset($doc['document']['imagenes']['6'])) ? $doc['document']['imagenes']['6'] : null : Upload::imagen($request->file('img6'), 'noticia', 'l'),
+                                                '7' => (is_null($request->file('img7'))) ? (isset($doc['document']['imagenes']['7'])) ? $doc['document']['imagenes']['7'] : null : Upload::imagen($request->file('img7'), 'noticia', 'l'),
+                                            ),
+                        "audios"    => array(   '1' => array('nombre' => $request->file('naudio1'), 'mp3' => (is_null($request->file('aaudio1'))) ? (isset($doc['document']['audios']['1'])) ? $doc['document']['audios']['1'] : null : Upload::mp3($request->file('aaudio1'))),
+                                                '2' => array('nombre' => $request->file('naudio2'), 'mp3' => (is_null($request->file('aaudio2'))) ? (isset($doc['document']['audios']['2'])) ? $doc['document']['audios']['2'] : null : Upload::mp3($request->file('aaudio2'))),
+                                                '2' => array('nombre' => $request->file('naudio3'), 'mp3' => (is_null($request->file('aaudio3'))) ? (isset($doc['document']['audios']['3'])) ? $doc['document']['audios']['3'] : null : Upload::mp3($request->file('aaudio3'))),
+                                            ),
+                        "descargas" => array(   '1' => $request->input('file1'),
+                                                '2' => $request->input('file2'),
+                                                '3' => $request->input('file3'),
+                                            ),
+                    ];
+
+        if($request->method() == "POST")
+        {
+            $accion = "I";
+
+            $q = ["collection" => 'noticias',
+                  "document"   => $document,
                  ];
+        }
+        else
+        {
+            (is_null($request->file('img1'))) ? : @unlink('noticias/'.$doc['document']['imagenes']['1']);
+            (is_null($request->file('img2'))) ? : @unlink('noticias/'.$doc['document']['imagenes']['2']);
+            (is_null($request->file('img3'))) ? : @unlink('noticias/'.$doc['document']['imagenes']['3']);
+            (is_null($request->file('img4'))) ? : @unlink('noticias/'.$doc['document']['imagenes']['4']);
+            (is_null($request->file('img5'))) ? : @unlink('noticias/'.$doc['document']['imagenes']['5']);
+            (is_null($request->file('img6'))) ? : @unlink('noticias/'.$doc['document']['imagenes']['6']);
+            (is_null($request->file('img7'))) ? : @unlink('noticias/'.$doc['document']['imagenes']['7']);
 
-       $this->mongo($q,$accion);
+            $accion = "U";
 
-      \Session::flash('success', 'La noticia se creó correctamente.');
-    }//POST
+            $q = [  "collection" => 'noticias',
+                    "filter"     => ['_id' => [ "\$oid" => $request->route()->noticiaId ]],
+                    "update"     => ["\$set" => $document],
+                ];
+        }
+
+        $this->mongo($q,$accion);
+
+        \Session::flash('success', 'La noticia se creó correctamente.');
+    }
 
     return \Redirect::to('cms/prensa');
   }

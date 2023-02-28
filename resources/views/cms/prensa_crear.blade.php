@@ -161,10 +161,10 @@
           <input id="audio_1" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia->naudio1)){{ $noticia->naudio1 }}@else{{ old('naudio1') }}@endif" type="text" name="naudio1" class="validate[required] form-control">
         </div><!--input-group-->
 
-        @if(isset($noticia->aaudio1))
+        @if(isset($noticia['audios']['1']['mp3']))
         <span class="help-block">
           <audio controls>
-            <source src="{{ asset($ruta->ruta_mp3().$noticia->aaudio1) }}" type="audio/mpeg">
+            <source src="{{ asset('noticias/'.$noticia['audios']['1']['mp3']) }}" type="audio/mpeg">
             Tu navegador no soporta este audio.
           </audio>
           <br>

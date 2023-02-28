@@ -46,6 +46,7 @@
     <table class="table table-bordered table-striped table-actions">
       <thead>
         <tr>
+          <th class="text-center">Seleccionar</th>
           <th class="text-center">Imagen</th>
           <th class="text-center">Noticia</th>
           <th class="text-center">Tipo</th>
@@ -73,9 +74,9 @@
             @if($noticia['tipo'] == "Texto")
             <strong><span class="btn btn-primary"><i class="far fa-font"></i> &nbsp;Texto</span></strong>
             @elseif($noticia['tipo'] == "Audio")
-            <strong><span class="btn btn-primary"><i class="far fa-font"></i> &nbsp;Audio</span></strong>
+            <strong><span class="btn btn-primary"><i class="fas fa-volume-up"></i> &nbsp;Audio</span></strong>
             @elseif($noticia['tipo'] == "Video")
-            <strong><span class="btn btn-primary"><i class="far fa-font"></i> &nbsp;Vídeo</span></strong>
+            <strong><span class="btn btn-primary"><i class="far fa-video"></i> &nbsp;Vídeo</span></strong>
             @endif
           </td>
           <td class="text-center">
@@ -84,7 +85,7 @@
           <td class="text-center">
             <ul class="panel-controls text-center">
               <li>
-                <a tabindex="4" data-toggle="tooltip" data-placement="top" data-original-title="Editar" class="control-warning" href="{{ url('/cms/prensa/'.$noticia['_id']) }}">
+                <a tabindex="4" data-toggle="tooltip" data-placement="top" data-original-title="Editar" class="control-warning" href="{{ url('/cms/prensa/'.$noticia['_id']) }}?tipo={{ $noticia['tipo']}}">
                   <span class="far fa-pencil-alt"></span>
                 </a>
               </li>
