@@ -33,6 +33,8 @@ Route::group(['prefix' => 'cms'], function () {
 
   Route::delete('/prensa/{noticiaId}/img/{imagenNo}', [App\Http\Controllers\CmsController::class, 'prensaBorrarImg']);
 
+  Route::delete('/prensa/{noticiaId}/mp3/{mp3No}', [App\Http\Controllers\CmsController::class, 'prensaBorrarMp3']);
+
 });
 
 

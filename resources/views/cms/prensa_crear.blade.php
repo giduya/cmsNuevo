@@ -99,7 +99,7 @@
       <div class="col-md-8 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="fab fa-youtube"></span></span>
-          <input id="video_1" placeholder="https://www.youtube.com/watch?v=BHKp4k-hTUc" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia->video1)){{ $noticia->yt($noticia->video1)['url'] }}@else{{ old('video1') }}@endif" name="video1" maxlength="255" type="text" class="validate[required,custom[url],maxSize[255]] form-control">
+          <input id="video_1" placeholder="https://www.youtube.com/watch?v=BHKp4k-hTUc" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['videos']['1'])){{ $noticia->yt($noticia->video1)['url'] }}@else{{ old('video1') }}@endif" name="video1" maxlength="255" type="text" class="validate[required,custom[url],maxSize[255]] form-control">
         </div><!--input-group-->
         <span class="help-block">Únicamente se aceptan vídeos de Youtube</span>
         @if(isset($noticia->video1))
@@ -158,13 +158,13 @@
       <div class="col-md-5 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="far fa-volume-up"></span></span>
-          <input id="audio_1" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia->naudio1)){{ $noticia->naudio1 }}@else{{ old('naudio1') }}@endif" type="text" name="naudio1" class="validate[required] form-control">
+          <input id="audio_1" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['audios']['1']['nombre'])){{ $noticia['audios']['1']['nombre'] }}@else{{ old('naudio1') }}@endif" type="text" name="naudio1" class="validate[required] form-control">
         </div><!--input-group-->
 
         @if(isset($noticia['audios']['1']['mp3']))
         <span class="help-block">
           <audio controls>
-            <source src="{{ asset('noticias/'.$noticia['audios']['1']['mp3']) }}" type="audio/mpeg">
+            <source src="{{ asset('noticias/'.$noticia['audios']['1']['mp3']) }}" type="audio/mpeg" required>
             Tu navegador no soporta este audio.
           </audio>
           <br>
@@ -188,13 +188,13 @@
       <div class="col-md-5 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="far fa-volume-up"></span></span>
-          <input id="audio_2" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia->naudio2)){{ $noticia->naudio2 }}@else{{ old('naudio2') }}@endif" type="text" name="naudio2" class="form-control">
+          <input id="audio_2" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['audios']['2']['nombre'])){{ $noticia['audios']['2']['nombre'] }}@else{{ old('naudio2') }}@endif" type="text" name="naudio2" class="form-control">
         </div><!--input-group-->
 
-        @if(isset($noticia->aaudio2))
+        @if(isset($noticia['audios']['2']['mp3']))
         <span class="help-block">
           <audio controls>
-            <source src="{{ asset($ruta->ruta_mp3().$noticia->aaudio2) }}" type="audio/mpeg">
+            <source src="{{ asset('noticias/'.$noticia['audios']['2']['mp3']) }}" type="audio/mpeg">
             Tu navegador no soporta este audio.
           </audio>
           <br>
@@ -219,13 +219,13 @@
       <div class="col-md-5 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="far fa-volume-up"></span></span>
-          <input id="audio_3" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia->naudio3)){{ $noticia->naudio3 }}@else{{ old('naudio3') }}@endif" type="text" name="naudio3" class="form-control">
+          <input id="audio_3" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['audios']['3']['nombre'])){{ $noticia['audios']['3']['nombre'] }}@else{{ old('naudio3') }}@endif" type="text" name="naudio3" class="form-control">
         </div><!--input-group-->
 
-        @if(isset($noticia->aaudio3))
+        @if(isset($noticia['audios']['3']['mp3']))
         <span class="help-block">
           <audio controls>
-            <source src="{{ asset($ruta->ruta_mp3().$noticia->aaudio3) }}" type="audio/mpeg">
+            <source src="{{ asset('noticias/'.$noticia['audios']['3']['mp3']) }}" type="audio/mpeg">
             Tu navegador no soporta este audio.
           </audio>
           <br>
@@ -608,7 +608,7 @@
 @endif
 
 
-@if(isset($noticia->naudio1))
+@if(isset($noticia['audios']['1']['mp3']))
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-mp31">
   <div class="mb-container">
     <div class="mb-middle">
@@ -618,7 +618,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/prensa/'.$noticia->id.'/mp3/1') }}" method="POST">
+          <form action="{{ url('cms/prensa/'.$noticia['_id'].'/mp3/1') }}" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <input name="_token"  type="hidden" value="{{ csrf_token() }}">
             <button class="btn btn-success btn-lg" type="submit">Sí</button>
@@ -632,7 +632,7 @@
 @endif
 
 
-@if(isset($noticia->naudio2))
+@if(isset($noticia['audios']['2']['mp3']))
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-mp32">
   <div class="mb-container">
     <div class="mb-middle">
@@ -642,7 +642,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/prensa/'.$noticia->id.'/mp3/2') }}" method="POST">
+          <form action="{{ url('cms/prensa/'.$noticia['_id'].'/mp3/2') }}" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <input name="_token"  type="hidden" value="{{ csrf_token() }}">
             <button class="btn btn-success btn-lg" type="submit">Sí</button>
@@ -656,7 +656,7 @@
 @endif
 
 
-@if(isset($noticia->naudio3))
+@if(isset($noticia['audios']['3']['mp3']))
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-mp33">
   <div class="mb-container">
     <div class="mb-middle">
@@ -666,7 +666,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/prensa/'.$noticia->id.'/mp3/3') }}" method="POST">
+          <form action="{{ url('cms/prensa/'.$noticia['_id'].'/mp3/3') }}" method="POST">
             <input name="_method" type="hidden" value="DELETE">
             <input name="_token"  type="hidden" value="{{ csrf_token() }}">
             <button class="btn btn-success btn-lg" type="submit">Sí</button>

@@ -32,7 +32,21 @@ class CmsController extends Controller
 
     if($request->method() == "DELETE")
     {
+      $noticia = $this->mongo($doc,"O");
+
       $req = $this->mongo($doc,'D');
+
+      @unlink('noticias/'.$noticia['document']['imagenes']['1']);
+      @unlink('noticias/'.$noticia['document']['imagenes']['2']);
+      @unlink('noticias/'.$noticia['document']['imagenes']['3']);
+      @unlink('noticias/'.$noticia['document']['imagenes']['4']);
+      @unlink('noticias/'.$noticia['document']['imagenes']['5']);
+      @unlink('noticias/'.$noticia['document']['imagenes']['6']);
+      @unlink('noticias/'.$noticia['document']['imagenes']['7']);
+
+      @unlink('noticias/'.$noticia['document']['audios'][1]['mp3']);
+      @unlink('noticias/'.$noticia['document']['audios'][2]['mp3']);
+      @unlink('noticias/'.$noticia['document']['audios'][3]['mp3']);
 
       \Session::flash('success', 'La noticia se borró correctamente.');
 
@@ -92,9 +106,13 @@ class CmsController extends Controller
                                                 '6' => (is_null($request->file('img6'))) ? (isset($doc['document']['imagenes']['6'])) ? $doc['document']['imagenes']['6'] : null : Upload::imagen($request->file('img6'), 'noticia', 'l'),
                                                 '7' => (is_null($request->file('img7'))) ? (isset($doc['document']['imagenes']['7'])) ? $doc['document']['imagenes']['7'] : null : Upload::imagen($request->file('img7'), 'noticia', 'l'),
                                             ),
-                        "audios"    => array(   '1' => array('nombre' => $request->file('naudio1'), 'mp3' => (is_null($request->file('aaudio1'))) ? (isset($doc['document']['audios']['1'])) ? $doc['document']['audios']['1'] : null : Upload::mp3($request->file('aaudio1'))),
-                                                '2' => array('nombre' => $request->file('naudio2'), 'mp3' => (is_null($request->file('aaudio2'))) ? (isset($doc['document']['audios']['2'])) ? $doc['document']['audios']['2'] : null : Upload::mp3($request->file('aaudio2'))),
-                                                '2' => array('nombre' => $request->file('naudio3'), 'mp3' => (is_null($request->file('aaudio3'))) ? (isset($doc['document']['audios']['3'])) ? $doc['document']['audios']['3'] : null : Upload::mp3($request->file('aaudio3'))),
+                        "audios"    => array(   '1' => array('nombre' => $request->input('naudio1'), 'mp3' => (is_null($request->file('aaudio1'))) ? (isset($doc['document']['audios']['1'])) ? $doc['document']['audios']['1']['mp3'] : null : Upload::mp3($request->file('aaudio1'))),
+                                                '2' => array('nombre' => $request->input('naudio2'), 'mp3' => (is_null($request->file('aaudio2'))) ? (isset($doc['document']['audios']['2'])) ? $doc['document']['audios']['2']['mp3'] : null : Upload::mp3($request->file('aaudio2'))),
+                                                '3' => array('nombre' => $request->input('naudio3'), 'mp3' => (is_null($request->file('aaudio3'))) ? (isset($doc['document']['audios']['3'])) ? $doc['document']['audios']['3']['mp3'] : null : Upload::mp3($request->file('aaudio3'))),
+                                            ),
+                        "videos"     => array(  '1' => $request->input('video1'),
+                                                '2' => $request->input('video2'),
+                                                '3' => $request->input('video3'),
                                             ),
                         "descargas" => array(   '1' => $request->input('file1'),
                                                 '2' => $request->input('file2'),
@@ -163,5 +181,31 @@ class CmsController extends Controller
     return \Redirect::to('cms/prensa/'.$request->route()->noticiaId);
   }
 
+
+
+
+  public function prensaBorrarMp3(Request $request)
+  {
+    $query = ["collection" => 'noticias',
+              "filter"       => ['_id' => [ "\$oid" => $request->route()->noticiaId ]],
+             ];
+
+    $noticia = $this->mongo($query,'O');
+
+    @unlink('noticias/'.$noticia['document']['audios'][$request->route()->mp3No]['mp3']);
+
+    $noticia['document']['audios'][$request->route()->imagenNo] = null;
+
+    $query = ["collection" => 'noticias',
+              "filter"     => ['_id' => [ "\$oid" => $request->route()->noticiaId ]],
+              "update"     => ["\$set" => ["audios.".$request->route()->mp3No => ["nombre" => null, "mp3" => null] ]],
+             ];
+
+    $noticias = $this->mongo($query,'U');
+
+    \Session::flash('success', 'La noticia se actualizó correctamente.');
+
+    return \Redirect::to('cms/prensa/'.$request->route()->noticiaId.'?tipo=Audio');
+  }
 
 }
