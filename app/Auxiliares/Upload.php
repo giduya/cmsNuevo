@@ -125,5 +125,21 @@ class Upload {
     }
   }
 
+  //////////////////////////////////////////////////////////////
+  ////////////////VIDEO
+  //////////////////////////////////////////////////////////////
+  public static function youtube($url){
+    if(preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', trim($url), $match))
+		{
+      return array('video' => $match[1],'tipo' => Video::$yt);
+		}
+    if(preg_match("~/videos/(?:t\.\d+/)?(\d+)~i", trim($url), $match))
+    {
+      return array('video' => $url,'tipo' => Video::$fb);
+    }
+
+    return array('video' => null,'tipo' => null);
+  }
+
 
 }
