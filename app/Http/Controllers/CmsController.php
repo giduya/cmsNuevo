@@ -110,7 +110,7 @@ class CmsController extends Controller
                                                 '2' => array('nombre' => $request->input('naudio2'), 'mp3' => (is_null($request->file('aaudio2'))) ? (isset($doc['document']['audios']['2'])) ? $doc['document']['audios']['2']['mp3'] : null : Upload::mp3($request->file('aaudio2'))),
                                                 '3' => array('nombre' => $request->input('naudio3'), 'mp3' => (is_null($request->file('aaudio3'))) ? (isset($doc['document']['audios']['3'])) ? $doc['document']['audios']['3']['mp3'] : null : Upload::mp3($request->file('aaudio3'))),
                                             ),
-                        "videos"     => array(  '1' => $request->input('video1'),
+                        "videos"     => array(  '1' => Upload::video($request->input('video1')),
                                                 '2' => $request->input('video2'),
                                                 '3' => $request->input('video3'),
                                             ),
