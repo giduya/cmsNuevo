@@ -39,5 +39,20 @@ class AppServiceProvider extends ServiceProvider
         return "<?php if($fecha){ echo \Date::parse($fecha)->format('d-m-Y'); } ?>"; //12-01-2012
       });
 
+
+      Blade::directive('linkYt', function($id){
+        return "<?php
+                    echo 'https://www.youtube.com/watch?v='.$id;
+                ?>";
+      });
+
+
+      Blade::directive('embedYt', function($id){
+        return "<?php
+                    echo '<iframe src=https://www.youtube.com/embed/></iframe>';
+                ?>";
+      });
+
+
     }
 }

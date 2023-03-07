@@ -838,6 +838,6 @@ img {
 
 /*IFRAME*/
 iframe{
-  width: 100% !important;
+  width: 300px !important;
   border: none !important;
 }

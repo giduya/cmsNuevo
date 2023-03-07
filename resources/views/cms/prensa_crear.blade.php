@@ -99,12 +99,12 @@
       <div class="col-md-8 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="fab fa-youtube"></span></span>
-          <input id="video_1" placeholder="https://www.youtube.com/watch?v=BHKp4k-hTUc" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['videos']['1'])){{ $noticia['videos']['1'] }}@else{{ old('video1') }}@endif" name="video1" maxlength="255" type="text" class="validate[required,custom[url],maxSize[255]] form-control">
+          <input id="video_1" placeholder="https://www.youtube.com/watch?v=BHKp4k-hTUc" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['videos']['1']))@linkYt($noticia['videos']['1'])@else{{ old('video1') }}@endif" name="video1" maxlength="255" type="text" class="validate[required,custom[url],maxSize[255]] form-control">
         </div><!--input-group-->
         <span class="help-block">Únicamente se aceptan vídeos de Youtube</span>
         @if(isset($noticia['videos']['1']))
         <span class="help-block">
-          {!! $noticia['videos']['1'] !!}
+          <iframe src=https://www.youtube.com/embed/{{ $noticia['videos']['1'] }}></iframe>
         </span>
         @endif
       </div><!--col-md-6-->
@@ -118,12 +118,12 @@
       <div class="col-md-8 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="fab fa-youtube"></span></span>
-          <input id="video_2" placeholder="https://www.youtube.com/watch?v=BHKp4k-hTUc" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['videos']['2'])){{ $noticia['videos']['2'] }}@else{{ old('video2') }}@endif" name="video2" maxlength="255" type="text" class="validate[required,custom[url],maxSize[255]] form-control">
+          <input id="video_2" placeholder="https://www.youtube.com/watch?v=BHKp4k-hTUc" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['videos']['2']))@linkYt($noticia['videos']['2'])@else{{ old('video2') }}@endif" name="video2" maxlength="255" type="text" class="validate[required,custom[url],maxSize[255]] form-control">
         </div><!--input-group-->
         <span class="help-block">Únicamente se aceptan vídeos de Youtube</span>
         @if(isset($noticia['videos']['2']))
         <span class="help-block">
-          {!! $noticia['videos']['2'] !!}
+          <iframe src=https://www.youtube.com/embed/{{ $noticia['videos']['2'] }}></iframe>
         </span>
         @endif
       </div><!--col-md-6-->
@@ -137,12 +137,12 @@
       <div class="col-md-8 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="fab fa-youtube"></span></span>
-          <input id="video_3" placeholder="https://www.youtube.com/watch?v=BHKp4k-hTUc" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['videos']['3'])){{ $noticia['videos']['3'] }}@else{{ old('video3') }}@endif" name="video3" maxlength="255" type="text" class="validate[required,custom[url],maxSize[255]] form-control">
+          <input id="video_3" placeholder="https://www.youtube.com/watch?v=BHKp4k-hTUc" tabindex="{{ ++$tabindex }}" value="@if(isset($noticia['videos']['3']))@linkYt($noticia['videos']['3'])@else{{ old('video3') }}@endif" name="video3" maxlength="255" type="text" class="validate[required,custom[url],maxSize[255]] form-control">
         </div><!--input-group-->
         <span class="help-block">Únicamente se aceptan vídeos de Youtube</span>
         @if(isset($noticia['videos']['3']))
         <span class="help-block">
-          {!! $noticia['videos']['3'] !!}
+          <iframe src=https://www.youtube.com/embed/{{ $noticia['videos']['3'] }}></iframe>
         </span>
         @endif
       </div><!--col-md-6-->
