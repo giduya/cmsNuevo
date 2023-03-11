@@ -309,50 +309,6 @@
 
 
 
-
-    <div class="form-group">
-      <label class="col-md-2 col-xs-12 control-label">
-        Archivo descargable:
-      </label>
-      <div class="col-md-3 col-xs-12">
-        <div class="input-group">
-          <input id="fil_1" tabindex="{{ ++$tabindex }}" type="file" class="fileinput" title="Foto 1:" name="file1" accept="image/*">
-        </div><!--input-group-->
-        @if(isset($noticia->file1))
-        <span class="help-block text-center" style="max-width:250px">
-          <img src="{{ asset($ruta->ruta_img().$noticia->img2) }}" width="150" alt="" class="img-thumbnail">
-          <br>
-          <button type="button" class="btn btn-danger btn-default btn-condensed btn-sm mb-control" style="margin 5px 100px 0px 100px !important" data-box="#mb-img2">Borrar</button>
-        </span>
-        @endif
-      </div><!--col-md-6-->
-      <div class="col-md-3 col-xs-12">
-        <div class="input-group">
-          <input id="imagen_3" tabindex="{{ ++$tabindex }}" type="file" class="fileinput" title="Foto 2:" name="img3" accept="image/*">
-        </div><!--input-group-->
-        @if(isset($noticia->img3))
-        <span class="help-block text-center" style="max-width:250px">
-          <img src="{{ asset($ruta->ruta_img().$noticia->img3) }}" width="150" alt="" class="img-thumbnail">
-          <br>
-          <button type="button" class="btn btn-danger btn-default btn-condensed btn-sm mb-control" style="margin 5px 100px 0px 100px !important" data-box="#mb-img3">Borrar</button>
-        </span>
-        @endif
-      </div><!--col-md-6-->
-      <div class="col-md-3 col-xs-12">
-        <div class="input-group">
-          <input id="imagen_4" tabindex="{{ ++$tabindex }}" type="file" class="fileinput" title="Foto 3:" name="img4" accept="image/*">
-        </div><!--input-group-->
-        @if(isset($noticia->img4))
-        <span class="help-block text-center" style="max-width:250px">
-          <img src="{{ asset($ruta->ruta_img().$noticia->img4) }}" width="150" alt="" class="img-thumbnail">
-          <br>
-          <button type="button" class="btn btn-danger btn-default btn-condensed btn-sm mb-control" style="margin 5px 100px 0px 100px !important" data-box="#mb-img4">Borrar</button>
-        </span>
-        @endif
-      </div><!--col-md-6-->
-    </div><!--form-group-->
-
-
     <div class="form-group">
       <label class="col-md-2 col-xs-12 control-label">
         Imagenes Secundarias:

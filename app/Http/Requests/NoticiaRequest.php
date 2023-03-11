@@ -1,8 +1,9 @@
 <?php namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class PrensaRequest extends Request {
+
+class NoticiaRequest extends FormRequest {
 
 
 	public function authorize()
@@ -19,10 +20,10 @@ class PrensaRequest extends Request {
 		return [
 						'fecha.required'        => 'La "fecha" es obligatoria.',
 						'fecha.date_format'     => 'La "fecha" no tiene el formato aceptado: (01/12/2019).',
-	        	'dimensions'            => 'La :attribute debe tener mínimo 200px de ancho y/o alto y máximo 2500px de ancho y/o alto.',
-	        	'mimetypes'             => 'El :attribute no es un archivo de audio mp3 válido. Si es un mp3, elimina las etiquetas IDV3.',
+	        			'dimensions'            => 'La :attribute debe tener mínimo 250px de ancho y/o alto y máximo 1500px de ancho y/o alto.',
+	        			'mimetypes'             => 'El :attribute no es un archivo de audio mp3 válido. Si es un mp3, elimina las etiquetas IDV3.',
 						'video1.required_if'    => 'El "vídeo" 1 es obligatorio.',
-						'url'                   => 'El ":attribute" no es un link de youtube válido.',
+						'url'                   => 'El ":attribute" no es un link válido.',
 						'video1.required_if'    => 'El link del vídeo 1 es obligatorio si la noticia es del tipo video.',
 						'naudio1.required_if'   => 'El nombre del audio 1 y Mp3 1 es obligatorio si la noticia es del tipo audio.',
 						'naudio1.required_with' => 'El nombre del audio 1 es obligatorio si el Mp3 1 está presente.',
@@ -46,6 +47,14 @@ class PrensaRequest extends Request {
 		$audio2file = null;
 		$audio3file = null;
 
+
+		if($this->method() == "GET")
+		{
+			return [];
+		}
+
+
+
 		if($this->method() == "POST")
 		{
 			$audio1file = '|required_if:tipo,audio|required_with:naudio1';
@@ -56,18 +65,21 @@ class PrensaRequest extends Request {
 		return [
 			'titulo'    => 'required|max:100',
 			'fecha'     => 'required|date|date_format:"d-m-Y"',
-			'extracto'  => 'required|max:5000',
-			'contenido' => 'required',
-			'img1'      => 'image|dimensions:max_width=2500,max_height=2500,min_width=200,min_height=200',
-			'img2'      => 'image|dimensions:max_width=2500,max_height=2500,min_width=200,min_height=200',
-			'img3'      => 'image|dimensions:max_width=2500,max_height=2500,min_width=200,min_height=200',
-			'img4'      => 'image|dimensions:max_width=2500,max_height=2500,min_width=200,min_height=200',
-			'img5'      => 'image|dimensions:max_width=2500,max_height=2500,min_width=200,min_height=200',
-			'img6'      => 'image|dimensions:max_width=2500,max_height=2500,min_width=200,min_height=200',
-			'img7'      => 'image|dimensions:max_width=2500,max_height=2500,min_width=200,min_height=200',
-			'video1'    => 'required_if:tipo,video|url|max:255',
+			'extracto'  => 'required|max:1000',
+			'contenido' => 'required|max:5000',
+			'img1'      => 'image|dimensions:max_width=1500,max_height=1500,min_width=250,min_height=250',
+			'img2'      => 'image|dimensions:max_width=1500,max_height=1500,min_width=250,min_height=250',
+			'img3'      => 'image|dimensions:max_width=1500,max_height=1500,min_width=250,min_height=250',
+			'img4'      => 'image|dimensions:max_width=1500,max_height=1500,min_width=250,min_height=250',
+			'img5'      => 'image|dimensions:max_width=1500,max_height=1500,min_width=250,min_height=250',
+			'img6'      => 'image|dimensions:max_width=1500,max_height=1500,min_width=250,min_height=250',
+			'img7'      => 'image|dimensions:max_width=1500,max_height=1500,min_width=250,min_height=250',
+			'video1'    => 'required_if:tipo,Video|url|max:255',
 			'video2'    => 'url|max:255',
 			'video3'    => 'url|max:255',
+			'link1'     => 'url|max:255',
+			'link2'     => 'url|max:255',
+			'link3'     => 'url|max:255',
 			'naudio1'   => 'max:255|required_with:aaudio1|required_if:tipo,audio',
 			'naudio2'   => 'max:255|required_with:aaudio2',
 			'naudio3'   => 'max:255|required_with:aaudio3',

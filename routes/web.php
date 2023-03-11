@@ -27,7 +27,7 @@ Route::group(['prefix' => 'cms'], function () {
   /*CMS*/ /*INICIO*/
   Route::get('/', [App\Http\Controllers\CmsController::class, 'index']);
 
-  Route::get('/diseno', [App\Http\Controllers\CmsController::class, 'diseno']);
+  Route::get('/diseno', [App\Http\Controllers\DisenoController::class, 'diseno']);
 
   Route::match(['post','get','patch','delete'],'/prensa/{noticiaId?}', [App\Http\Controllers\CmsController::class, 'prensa']);
 

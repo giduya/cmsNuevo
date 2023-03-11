@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Http;
 use App\Auxiliares\Upload;
 use App\Models\Noticia;
 
+use App\Http\Requests\NoticiaRequest;
 
-class CmsController extends Controller
+
+class NoticiaController extends Controller
 {
 
   public function __construct()
@@ -24,7 +26,7 @@ class CmsController extends Controller
 
 
 
-  public function prensa(PrensaRequest $request)
+  public function prensa(NoticiaRequest $request)
   {
     $doc = ["collection" => 'noticias',
             "filter"     => ['_id' => [ "\$oid" => $request->route()->noticiaId ]]];
