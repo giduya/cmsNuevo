@@ -81,6 +81,7 @@ class NoticiaController extends Controller
 
 
 
+
     if($request->method() == "POST" or $request->method() == "PATCH")
     {
         $doc = ["collection" => 'noticias',

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/instalar', [App\Http\Controllers\DisenoController::class, 'instalar']);
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,13 +23,14 @@ Auth::routes();
 
 Route::get('/apps', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
 Route::group(['prefix' => 'cms'], function () {
 
   /*CMS*/ /*INICIO*/
   Route::get('/', [App\Http\Controllers\CmsController::class, 'index']);
 
-  Route::get('/diseno', [App\Http\Controllers\DisenoController::class, 'diseno']);
+  Route::get('/diseno/{pestana}', [App\Http\Controllers\DisenoController::class, 'diseno']);
+
+  Route::patch('/config', [App\Http\Controllers\DisenoController::class, 'config']);
 
   Route::match(['post','get','patch','delete'],'/prensa/{noticiaId?}', [App\Http\Controllers\CmsController::class, 'prensa']);
 
