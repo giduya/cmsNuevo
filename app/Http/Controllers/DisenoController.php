@@ -23,7 +23,8 @@ class DisenoController extends Controller
   public function instalar()
   {
     ///////////////////////////////////////////////////////////////////////
-    $document = ["tema" => 1,
+    $document = [
+                 "tema" => 1,
                  "titulo" => "Municipio de ???",
                  "descripcion" => "Sitio web oficial del Municipio ??? con toda la información general, turística, servicios y más que necesitas de tu gobierno municipal.",
                 ];
@@ -37,8 +38,23 @@ class DisenoController extends Controller
 
 
 
+  public function config()
+  {
+    $q = ["collection" => 'config'];
+
+    $config = $this->mongo($q,'O');
+
+    return $config['document'];
+  }
+
+
+
   public function diseno($pestana)
   {
+    $q = ["collection" => 'config'];
+
+    $config = $this->mongo($q,'O');
+
     $metas = [];
     $csss = [];
     $jss = [];
@@ -51,14 +67,6 @@ class DisenoController extends Controller
     $fondos= [];
     $body = [];
     $config = [];
-
-    ////////////////////////////////////////////////////////////////////////
-    $q = ["collection" => 'config'];
-
-    $config = $this->mongo($q,'O');
-
-    ////////////////////////////////////////////////////////////////////////
-
 
     return view('cms.diseno')->with('pestana',$pestana)
                              ->with('metas',$metas)
@@ -73,14 +81,15 @@ class DisenoController extends Controller
                              ->with('tipos_modulo',$tipos_modulo)
                              ->with('fondos',$fondos)
                              ->with('body',$body)
-                             ->with('config',$config['document']);
+                             ->with('config',$this->config());
   }
 
 
 
-  public function config(ConfigRequest $request)
+
+  public function head(ConfigRequest $request)
   {
-    dd($request->all()); exit;
+
   }
 
 }
