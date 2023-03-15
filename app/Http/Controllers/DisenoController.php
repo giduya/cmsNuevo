@@ -89,7 +89,20 @@ class DisenoController extends Controller
 
   public function head(ConfigRequest $request)
   {
+    $document = [
+                 "titulo" => $request->input('titulo'),
+                 "descripcion" => $request->input('descripcion'),
+                ];
 
+
+    $q = [  "collection" => 'config',
+            "filter"     => ['_id' => [ "\$oid" => $this->config()['id'] ]],
+            "update"     => ["\$set" => $document],
+         ];
+
+    $r = $this->mongo($q,"U");
+
+    dd($request->input('titulo')); exit;
   }
 
 }
