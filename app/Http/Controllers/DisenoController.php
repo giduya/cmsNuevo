@@ -20,6 +20,7 @@ class DisenoController extends Controller
 
 
 
+
   public function instalar()
   {
     ///////////////////////////////////////////////////////////////////////
@@ -34,28 +35,42 @@ class DisenoController extends Controller
          ];
 
     $res = $this->mongo($q,"I");
+
+    $maqueta = [
+        "tema" => 1,
+        "meta" => [],
+       ];
+
+    $q = ["collection" => 'maqueta',
+          "document"   => $maqueta,
+        ];
+
+    $res = $this->mongo($q,"I");
   }
+
 
 
 
   public function config()
   {
     $q = ["collection" => 'config'];
-
     $config = $this->mongo($q,'O');
 
-    return $config['document'];
+    $q = ["collection" => 'maqueta',
+          "filter"     => ['tema' => 1]];
+
+    $maqueta = $this->mongo($q,'O');
+
+    $array = array_merge($config['document'],$maqueta['document']);
+
+    return $array;
   }
+
 
 
 
   public function diseno($pestana)
   {
-    $q = ["collection" => 'config'];
-
-    $config = $this->mongo($q,'O');
-
-    $metas = [];
     $csss = [];
     $jss = [];
     $links = [];
@@ -69,7 +84,6 @@ class DisenoController extends Controller
     $config = [];
 
     return view('cms.diseno')->with('pestana',$pestana)
-                             ->with('metas',$metas)
                              ->with('csss',$csss)
                              ->with('jss',$jss)
                              ->with('links',$links)
@@ -94,15 +108,27 @@ class DisenoController extends Controller
                  "descripcion" => $request->input('descripcion'),
                 ];
 
-
     $q = [  "collection" => 'config',
-            "filter"     => ['_id' => [ "\$oid" => $this->config()['id'] ]],
+            "filter"     => ['_id' => [ "\$oid" => $this->config()['_id'] ]],
             "update"     => ["\$set" => $document],
          ];
 
     $r = $this->mongo($q,"U");
 
-    dd($request->input('titulo')); exit;
+    if(isset($r['modifiedCount']))
+    {
+        \Session::flash('success', 'El título y descripción se actualizó correctamente.');
+    }
+
+    return \Redirect::to('cms/diseno/head');
   }
+
+
+
+  public function meta(ConfigRequest $request)
+  {
+    $r = $this->config();
+  }
+
 
 }

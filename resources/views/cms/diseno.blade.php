@@ -16,7 +16,7 @@
     <div class="panel panel-default tabs">
       <ul class="nav nav-tabs nav-justified" role="tablist">
         <li @if($pestana == "Plantillas") class="active" @endif ><a href="{{ url('cms/diseno/Plantillas') }}"><strong>Plantillas</strong></a></li>
-        <li @if($pestana == "Head")       class="active" @endif ><a href="{{ url('cms/diseno/Head') }}"><strong>Head</strong></a></li>
+        <li @if($pestana == "head")       class="active" @endif ><a href="{{ url('cms/diseno/head') }}"><strong>Head</strong></a></li>
         <li @if($pestana == "Portada")    class="active" @endif ><a href="{{ url('cms/diseno/Portada') }}"><strong>Portada</strong></a></li>
         <li @if($pestana == "Header")     class="active" @endif ><a href="{{ url('cms/diseno/Header') }}"><strong>Header</strong></a></li>
         <li @if($pestana == "Body")       class="active" @endif ><a href="{{ url('cms/diseno/Body') }}"><strong>Body</strong></a></li>
@@ -135,7 +135,7 @@
         <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
         <!--///////////////////////////////////////////////// INICIA TAB 2 ///////////////////////////////////////////////////////-->
         <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-        <div class="tab-pane @if($pestana == "Head") active @endif" id="tab-second">
+        <div class="tab-pane @if($pestana == "head") active @endif" id="tab-second">
           <div class="col-md-12">
 
             <div class="btn-group btn-group-lg pull-right">
@@ -152,7 +152,7 @@
               <div class="panel-body">
 
 
-                <form name="validate" class="form-horizontal" autocomplete="off" action="{{ url('cms/config') }}" method="POST">
+                <form name="validate" class="form-horizontal" autocomplete="off" action="{{ url('cms/config/head') }}" method="POST">
 
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <input type="hidden" name="_method" value="PATCH">
