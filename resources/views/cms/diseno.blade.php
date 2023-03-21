@@ -208,7 +208,7 @@
                     <label class="col-md-1 control-label"></label>
                   </div>
 
-                  @foreach($metas as $meta)
+                  @foreach($maqueta['metas'] as $meta)
                     <div class="form-group">
                       <label class="col-md-1 control-label"></label>
                       <div class="col-md-10 col-xs-12">
@@ -274,7 +274,7 @@
                     <label class="col-md-1 control-label"></label>
                   </div>
 
-                  @foreach($links as $link)
+                  @foreach($config['links'] as $link)
                     <div class="form-group">
                       <label class="col-md-1 control-label"></label>
                       <div class="col-md-10 col-xs-12">
@@ -940,7 +940,7 @@
 
 
 
-@foreach($metas as $meta)
+@foreach($config['metas'] as $meta)
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="meta-{{ $meta['id'] }}">
   <div class="mb-container">
     <div class="mb-middle">
@@ -996,7 +996,7 @@
 
 
 
-@foreach($links as $link)
+@foreach($maqueta['links'] as $link)
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="link-{{ $link['id'] }}">
   <div class="mb-container">
     <div class="mb-middle">

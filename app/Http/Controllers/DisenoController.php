@@ -38,7 +38,8 @@ class DisenoController extends Controller
 
     $maqueta = [
         "tema" => 1,
-        "meta" => [],
+        "metas" => [],
+        "links" => [],
        ];
 
     $q = ["collection" => 'maqueta',
@@ -54,16 +55,23 @@ class DisenoController extends Controller
   public function config()
   {
     $q = ["collection" => 'config'];
-    $config = $this->mongo($q,'O');
 
+    $config = $this->mongo($q,'O')['document'];
+
+    return $config;
+  }
+
+
+
+
+  public function maqueta()
+  {
     $q = ["collection" => 'maqueta',
-          "filter"     => ['tema' => 1]];
+          "filter"     => ['tema' => $this->config()['tema']]];
 
-    $maqueta = $this->mongo($q,'O');
+    $maqueta = $this->mongo($q,'O')['document'];
 
-    $array = array_merge($config['document'],$maqueta['document']);
-
-    return $array;
+    return $maqueta;
   }
 
 
@@ -73,7 +81,6 @@ class DisenoController extends Controller
   {
     $csss = [];
     $jss = [];
-    $links = [];
     $columnas_create = [];
     $duplicar_en_columnas = [];
     $no_temas = 0;
@@ -81,12 +88,10 @@ class DisenoController extends Controller
     $tipos_modulo = [];
     $fondos= [];
     $body = [];
-    $config = [];
 
     return view('cms.diseno')->with('pestana',$pestana)
                              ->with('csss',$csss)
                              ->with('jss',$jss)
-                             ->with('links',$links)
                              ->with('modulos',[])
                              ->with('columnas_create',$columnas_create)
                              ->with('duplicar_en_columnas',$duplicar_en_columnas)
@@ -95,6 +100,7 @@ class DisenoController extends Controller
                              ->with('tipos_modulo',$tipos_modulo)
                              ->with('fondos',$fondos)
                              ->with('body',$body)
+                             ->with('maqueta',$this->maqueta())
                              ->with('config',$this->config());
   }
 
@@ -127,7 +133,24 @@ class DisenoController extends Controller
 
   public function meta(ConfigRequest $request)
   {
-    $r = $this->config();
+    $config = $this->config();
+
+    $metas = $this->maqueta()['metas'];
+
+    dd($metas); exit;
+
+    $document = [
+                    "metas" => $request->input('titulo'),
+                    "descripcion" => $request->input('descripcion'),
+                ];
+
+    $q = [  "collection" => 'config',
+            "filter"     => ['_id' => [ "\$oid" => $this->config()['_id'] ]],
+            "update"     => ["\$set" => $document],
+        ];
+
+    $maqueta = $this->mongo($q,'O');
+
   }
 
 
