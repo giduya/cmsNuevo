@@ -135,22 +135,19 @@ class DisenoController extends Controller
   {
     $config = $this->config();
 
-    $metas = $this->maqueta()['metas'];
-
-    dd($metas); exit;
+    $array = $this->maqueta()['metas'];
 
     $document = [
-                    "metas" => $request->input('titulo'),
-                    "descripcion" => $request->input('descripcion'),
+                    "metas" => array_push($array,$request->input('atributos')),
                 ];
-
-    $q = [  "collection" => 'config',
-            "filter"     => ['_id' => [ "\$oid" => $this->config()['_id'] ]],
+                dd($this->maqueta()['_id']);
+    $q = [  "collection" => 'maqueta',
+            "filter"     => ['_id' => [ "\$oid" => $this->maqueta()['_id'] ]],
             "update"     => ["\$set" => $document],
         ];
 
-    $maqueta = $this->mongo($q,'O');
-
+    $r = $this->mongo($q,'U');
+ dd($r); exit;
   }
 
 
