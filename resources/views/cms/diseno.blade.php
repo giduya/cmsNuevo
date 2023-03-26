@@ -139,8 +139,8 @@
           <div class="col-md-12">
 
             <div class="btn-group btn-group-lg pull-right">
-              <a href="{{ url('cms/config/css/create') }}" class="btn btn-default" accesskey="c"><span class="fas fa-plus"></span> CSS</a>
-              <a href="{{ url('cms/config/js/create') }}" class="btn btn-default" accesskey="j"><span class="fas fa-plus"></span> JS</a>
+              <a href="{{ url('cms/config/css') }}" class="btn btn-default" accesskey="c"><span class="fas fa-plus"></span> CSS</a>
+              <a href="{{ url('cms/config/js') }}" class="btn btn-default" accesskey="j"><span class="fas fa-plus"></span> JS</a>
             </div>
 
             <h2>Editar  &lt;head&gt;</h2>
@@ -208,16 +208,16 @@
                     <label class="col-md-1 control-label"></label>
                   </div>
 
-                  @foreach($maqueta['metas'] as $meta)
+                  @foreach($maqueta['metas'] as $key => $meta)
                     <div class="form-group">
                       <label class="col-md-1 control-label"></label>
                       <div class="col-md-10 col-xs-12">
                         <div class="input-group">
                           <span class="input-group-addon">&lt;meta</span>
-                          <input id="meta{{ $meta->id }}" type="text" class="form-control" value="{{ $meta->atributos }}" readonly />
+                          <input id="meta{{ $key }}" type="text" class="form-control" value="{{ $meta }}" readonly />
                           <span class="input-group-addon">&gt;</span>
                           <span class="input-group-btn">
-                            <a class="btn btn-danger btn-condensed mb-control" tabindex="{{ $tabindex }}" data-box="#meta-{{ $meta->id }}"><i class="far fa-times"></i> Borrar</a>
+                            <a class="btn btn-danger btn-condensed mb-control" tabindex="{{ $tabindex }}" data-box="#meta-{{ $meta }}"><i class="far fa-times"></i> Borrar</a>
                           </span>
                         </div>
                       </div>
@@ -274,19 +274,19 @@
                     <label class="col-md-1 control-label"></label>
                   </div>
 
-                  @foreach($maqueta['links'] as $link)
+                  @foreach($maqueta['links'] as $key => $link)
                     <div class="form-group">
                       <label class="col-md-1 control-label"></label>
                       <div class="col-md-10 col-xs-12">
                         <div class="input-group">
                           <span class="input-group-addon">&lt;link</span>
-                          <input id="link{{ $link->id }}" type="text" class="form-control" value="{{ $link->atributos }}" readonly />
+                          <input id="link{{ $key }}" type="text" class="form-control" value="{{ $link['atributos'] }}" readonly />
                           <span class="input-group-addon add-on"> href=&quot; </span>
-                          <input id="favicon{{ $link->id }}" type="text" class="form-control" value="{{ $link->imagen }}" readonly />
+                          <input id="favicon{{ $key }}" type="text" class="form-control" value="{{ $link['icon'] }}" readonly />
                           <span class="input-group-addon">&gt;</span>
                           <span class="input-group-btn">
-                            <a class="btn btn-success btn-condensed" tabindex="{{ $tabindex }}" href="{{ url(CONTENIDOS.'/img/'.$link->imagen) }}" download="{{ $link->imagen }}" ><i class="far fa-download"></i> Descargar</a>
-                            <a class="btn btn-danger btn-condensed mb-control" tabindex="{{ $tabindex }}" data-box="#link-{{ $link->id }}"><i class="far fa-times"></i> Borrar</a>
+                            <a class="btn btn-success btn-condensed" tabindex="{{ $tabindex }}" href="{{ url('/imagenes/'.$link['icon']) }}" download="{{ $link['icon'] }}" ><i class="far fa-download"></i> Descargar</a>
+                            <a class="btn btn-danger btn-condensed mb-control" tabindex="{{ $tabindex }}" data-box="#link-{{ $key }}"><i class="far fa-times"></i> Borrar</a>
                           </span>
                         </div>
                       </div>
@@ -940,8 +940,8 @@
 
 
 
-@foreach($maqueta['metas'] as $meta)
-<div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="meta-{{ $meta['id'] }}">
+@foreach($maqueta['metas'] as $key => $meta)
+<div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="meta-{{ $key }}">
   <div class="mb-container">
     <div class="mb-middle">
       <div class="mb-title"><span class="fa fa-times"></span>¿ Borrar <strong>META</strong> ?</div>
@@ -952,7 +952,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/config/meta/'.$meta['id']) }}" method="POST">
+          <form action="{{ url('cms/config/meta/'.$key) }}" method="POST">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -996,8 +996,8 @@
 
 
 
-@foreach($maqueta['links'] as $link)
-<div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="link-{{ $link['id'] }}">
+@foreach($maqueta['links'] as $key => $link)
+<div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="link-{{ $key }}">
   <div class="mb-container">
     <div class="mb-middle">
       <div class="mb-title"><span class="fa fa fa-times"></span>¿ Borrar <strong>LINK</strong> ?</div>
@@ -1008,7 +1008,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/config/link/'.$link['id']) }}" method="POST">
+          <form action="{{ url('cms/config/link/'.$key) }}" method="POST">
 
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">

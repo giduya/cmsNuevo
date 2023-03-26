@@ -21,6 +21,7 @@ class DisenoController extends Controller
 
 
 
+
   public function instalar()
   {
     ///////////////////////////////////////////////////////////////////////
@@ -52,6 +53,7 @@ class DisenoController extends Controller
 
 
 
+
   public function config()
   {
     $q = ["collection" => 'config'];
@@ -60,6 +62,7 @@ class DisenoController extends Controller
 
     return $config;
   }
+
 
 
 
@@ -73,6 +76,7 @@ class DisenoController extends Controller
 
     return $maqueta;
   }
+
 
 
 
@@ -133,22 +137,95 @@ class DisenoController extends Controller
 
   public function meta(ConfigRequest $request)
   {
-    $config = $this->config();
 
     $array = $this->maqueta()['metas'];
 
-    $document = [
-                    "metas" => array_push($array,$request->input('atributos')),
-                ];
-                dd($this->maqueta()['_id']);
+    if($request->method() == "POST")
+    {
+        array_push($array,$request->input('atributos'));
+    }
+
+
+    if($request->method() == "DELETE")
+    {
+        unset($array[$request->route()->id]);
+    }
+
+    $document = [ "metas" => $array,];
+
     $q = [  "collection" => 'maqueta',
             "filter"     => ['_id' => [ "\$oid" => $this->maqueta()['_id'] ]],
             "update"     => ["\$set" => $document],
-        ];
+         ];
 
     $r = $this->mongo($q,'U');
- dd($r); exit;
+
+    if(isset($r['modifiedCount']))
+    {
+        \Session::flash('success', 'La etiqueta META se editó correctamente.');
+    }
+
+    return \Redirect::to('cms/diseno/head');
   }
 
+
+
+
+
+  public function link(ConfigRequest $request)
+  {
+    $array = $this->maqueta()['links'];
+
+    if($request->method() == "POST")
+    {
+        $favicon = $request->file('imagen');
+
+        array_push($array,['atributos' => $request->input('atributos'), 'icon' => 'favicon.'.$favicon->extension()]);
+
+        $favicon->move(public_path('imagenes'), 'favicon.'.$favicon->extension());
+    }
+
+
+    if($request->method() == "DELETE")
+    {
+        unset($array[$request->route()->id]);
+
+        @unlink('imagenes/favicon.png');
+    }
+
+    $document = [ "links" => $array,];
+
+    $q = [  "collection" => 'maqueta',
+            "filter"     => ['_id' => [ "\$oid" => $this->maqueta()['_id'] ]],
+            "update"     => ["\$set" => $document],
+         ];
+
+    $r = $this->mongo($q,'U');
+
+    if(isset($r['modifiedCount']))
+    {
+        \Session::flash('success', 'La etiqueta LINK se editó correctamente.');
+    }
+
+    return \Redirect::to('cms/diseno/head');
+  }
+
+
+
+
+
+  public function css(Request $request)
+  {
+    if($request->method() == "GET")
+    {
+        return view('cms.css');
+    }
+
+
+    if($request->method() == "POST")
+    {
+    }
+
+  }
 
 }

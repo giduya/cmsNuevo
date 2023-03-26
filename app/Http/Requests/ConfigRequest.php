@@ -29,6 +29,13 @@ class ConfigRequest extends FormRequest {
 
 	public function rules()
 	{
+		if($this->method() == "DELETE")
+		{
+			return [
+			];
+		}
+
+
 		if($this->method() == "POST")
 		{
 			return [
