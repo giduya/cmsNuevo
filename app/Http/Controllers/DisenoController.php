@@ -4,7 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 use App\Auxiliares\Upload;
-use App\Models\Noticia;
+use App\Models\Config;
+use App\Models\Css;
+use App\Models\Js;
 
 use App\Http\Requests\ConfigRequest;
 use App\Http\Requests\NoticiaRequest;
@@ -41,6 +43,8 @@ class DisenoController extends Controller
         "tema" => 1,
         "metas" => [],
         "links" => [],
+        "css" => [],
+        "js" => [],
        ];
 
     $q = ["collection" => 'maqueta',
@@ -54,28 +58,13 @@ class DisenoController extends Controller
 
 
 
-  public function config()
-  {
-    $q = ["collection" => 'config'];
-
-    $config = $this->mongo($q,'O')['document'];
-
-    return $config;
-  }
 
 
 
 
 
-  public function maqueta()
-  {
-    $q = ["collection" => 'maqueta',
-          "filter"     => ['tema' => $this->config()['tema']]];
 
-    $maqueta = $this->mongo($q,'O')['document'];
 
-    return $maqueta;
-  }
 
 
 
@@ -83,8 +72,8 @@ class DisenoController extends Controller
 
   public function diseno($pestana)
   {
-    $csss = [];
-    $jss = [];
+    $maqueta = Config::maqueta();
+
     $columnas_create = [];
     $duplicar_en_columnas = [];
     $no_temas = 0;
@@ -94,8 +83,9 @@ class DisenoController extends Controller
     $body = [];
 
     return view('cms.diseno')->with('pestana',$pestana)
-                             ->with('csss',$csss)
-                             ->with('jss',$jss)
+                             ->with('maqueta',$maqueta)
+                             ->with('csss',Css::csss())
+                             ->with('jss',Js::jss())
                              ->with('modulos',[])
                              ->with('columnas_create',$columnas_create)
                              ->with('duplicar_en_columnas',$duplicar_en_columnas)
@@ -104,8 +94,7 @@ class DisenoController extends Controller
                              ->with('tipos_modulo',$tipos_modulo)
                              ->with('fondos',$fondos)
                              ->with('body',$body)
-                             ->with('maqueta',$this->maqueta())
-                             ->with('config',$this->config());
+                             ->with('config',Config::config());
   }
 
 
@@ -216,16 +205,150 @@ class DisenoController extends Controller
 
   public function css(Request $request)
   {
+
     if($request->method() == "GET")
     {
-        return view('cms.css');
+        $csss = Css::csss();
+
+        if(!empty($csss[$request->route()->id]))
+        {
+            $css = $csss[$request->route()->id];
+
+            $css['fOpen'] = \File::get(Upload::ruta_css().$css['archivo']);
+        }
+        else
+        {
+            $css = [];
+        }
+
+        return view('cms.css')->with('config',Config::config())->with('css',$css);
     }
+
 
 
     if($request->method() == "POST")
     {
+        $r = Css::crear($request->input());
+
+        if(isset($r['danger']))
+        {
+            $danger = 'Ya existe un archivo CSS con ese nombre.';
+        }
+        else
+        {
+            $success = 'El archivo CSS se creó correctamente.';
+        }
     }
 
+
+
+    if($request->method() == "PATCH")
+    {
+        Css::borrar($request->route()->id);
+
+        $r = Css::crear($request->input());
+
+        if(isset($r['danger']))
+        {
+            $danger = 'Ya existe un archivo con ese nombre.';
+        }
+        else
+        {
+            $success = 'El archivo CSS se actualizó correctamente.';
+        }
+    }
+
+
+
+    if($request->method() == "DELETE")
+    {
+        $r = Css::borrar($request->route()->id);
+
+        $success = 'El archivo CSS se borró correctamente.';
+    }
+
+
+
+    if(isset($r['modifiedCount']))
+    {
+        \Session::flash('success', $success);
+    }
+    elseif(isset(($r['danger'])))
+    {
+        \Session::flash('danger', $danger);
+    }
+
+    return \Redirect::to('cms/diseno/head');
+  }
+
+
+
+
+  public function js(Request $request)
+  {
+
+    if($request->method() == "GET")
+    {
+        $jss = Js::jss();
+
+        if(!empty($jss[$request->route()->id]))
+        {
+            $js = $jss[$request->route()->id];
+
+            $js['fOpen'] = \File::get(Upload::ruta_js().$js['archivo']);
+        }
+        else
+        {
+            $js = [];
+        }
+
+        return view('cms.js')->with('config',Config::config())->with('js',$js);
+    }
+
+
+
+    if($request->method() == "POST")
+    {
+        $r = Js::crear($request->input());
+
+        if(isset($r['danger']))
+        {
+            $danger = 'Ya existe un archivo JS con ese nombre.';
+        }
+        else
+        {
+            $success = 'El archivo JS se creó correctamente.';
+        }
+    }
+
+
+
+    if($request->method() == "PATCH")
+    {
+        Js::borrar($request->route()->id);
+
+        $r = Js::crear($request->input());
+
+        $success = 'El archivo JS se actualizó correctamente.';
+    }
+
+
+
+    if($request->method() == "DELETE")
+    {
+        $r = Js::borrar($request->route()->id);
+
+        $success = 'El archivo JS se borró correctamente.';
+    }
+
+
+
+    if(isset($r['modifiedCount']))
+    {
+        \Session::flash('success', $success);
+    }
+
+    return \Redirect::to('cms/diseno/head');
   }
 
 }

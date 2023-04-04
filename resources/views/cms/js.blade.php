@@ -4,14 +4,14 @@
 
 
 @section('h2')
-  <h2><span class="fab fa-css3"></span> Editar Css</h2>
+<h2><span class="fab fa-js"></span> Editar Js</h2>
 @endsection
 
 
 
 
 @section('panel-heading')
-  <h3 class="panel-title">Crear Archivo <strong>CSS</strong></h3>
+  <h3 class="panel-title">Crear Archivo <strong>JS</strong></h3>
 @endsection
 
 
@@ -27,10 +27,10 @@
   <p>Los campos marcados con <code>*</code> son obligatorios.</p>
 </div>
 <div class="panel-body">
-  <form id="validate" name="validate" class="form-horizontal" autocomplete="off" action="@if(isset($css)){{ url('cms/config/css/'.request()->route('id')) }}@else{{ url('cms/config/css/') }}@endif" method="POST">
+  <form id="validate" name="validate" class="form-horizontal" autocomplete="off" action="@if(isset($js)){{ url('cms/config/js/'.request()->route('id')) }}@else{{ url('cms/config/js/') }}@endif" method="POST">
 
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    @if(isset($css['archivo']))
+    @if(isset($js['archivo']))
       <input type="hidden" name="_method" value="PATCH">
     @endif
 
@@ -42,8 +42,8 @@
       <div class="col-md-8 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="far fa-file-code"></span></span>
-          <input id="nombre" tabindex="{{ ++$tabindex }}" maxlength="35" type="text" placeholder="Nombre del archivo" maxlength="35" class="validate[required,maxSize[35]] form-control" @if(old('nombre')) value="{{ old('nombre') }}" @else  @if(isset($css['nombre'])) value="{{ $css['nombre'] }}" @endif @endif autofocus="autofocus" name="nombre">
-          <span class="input-group-addon">.css</span>
+          <input id="nombre" tabindex="{{ ++$tabindex }}" type="text" placeholder="Nombre del archivo" maxlength="35" class="validate[required,maxSize[35]] form-control" @if(old('nombre')) value="{{ old('nombre') }}" @else  @if(isset($js['nombre'])) value="{{ $js['nombre'] }}" @endif @endif autofocus="autofocus" name="nombre">
+          <span class="input-group-addon">.js</span>
         </div><!--input-group-->
       </div><!--col-md-6-->
     </div><!--form-group-->
@@ -51,12 +51,11 @@
     <div class="form-group">
       <label for="atributos" class="col-md-2 col-xs-12 control-label">
         Atributos:
-        <code>*</code>
       </label>
       <div class="col-md-8 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="far fa-code"></span></span>
-          <input id="atributos" tabindex="{{ ++$tabindex }}" type="text" maxlength="255" class="validate[required,maxSize[255]] form-control" @if(old('atributos')) value="{{ old('atributos') }}" @else  @if(isset($css['atributos'])) value="{{ $css['atributos']}}" @else value='rel="stylesheet" type="text/css"' @endif @endif name="atributos">
+          <input id="atributos" tabindex="{{ ++$tabindex }}" type="text" maxlength="255" class="validate[maxSize[255]] form-control" @if(old('atributos')) value="{{ old('atributos') }}" @else  @if(isset($js['atributos'])) value="{{ $js['atributos']}}" @else value="" @endif @endif name="atributos">
         </div><!--input-group-->
       </div><!--col-md-6-->
     </div><!--form-group-->
@@ -69,18 +68,18 @@
       <div class="col-md-2 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon"><span class="far fa-sort-numeric-down"></span></span>
-          <input id="lista" tabindex="{{ ++$tabindex }}" maxlength="2" type="number" class="validate[custom[integer]] form-control" @if(old('lista')) value="{{ old('lista') }}" @else  @if(isset($css['lista'])) value="{{ $css['lista']}}" @else value="0" @endif @endif name="lista">
+          <input id="lista" tabindex="{{ ++$tabindex }}" maxlength="2" type="number" class="validate[custom[integer]] form-control" @if(old('lista')) value="{{ old('lista') }}" @else  @if(isset($js['lista'])) value="{{ $js['lista']}}" @else value="0" @endif @endif name="lista">
         </div><!--input-group-->
       </div><!--col-md-6-->
     </div><!--form-group-->
 
     <div class="form-group">
-      <label for="codeEditor" class="col-md-2 col-xs-12 control-label">
-        Código Css:
+      <label for="descripcion" class="col-md-2 col-xs-12 control-label">
+        Código Js:
         <code>*</code>
       </label>
       <div class="col-md-8 col-xs-12">
-        <textarea id="codeEditor" tabindex="{{ ++$tabindex }}" name="css" class="form-control">@if(isset($css['fOpen'])){{ $css['fOpen'] }}@else{{ old('css') }}@endif</textarea>
+        <textarea id="codeEditor" tabindex="{{ ++$tabindex }}" name="js" class="form-control">@if(isset($js['fOpen'])){{ $js['fOpen'] }}@else{{ old('js') }}@endif</textarea>
       </div><!--col-md-6-->
     </div>
   </form><!--form-->

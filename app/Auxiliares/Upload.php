@@ -12,6 +12,8 @@ class Upload {
     return $ruta;
   }
 
+
+
   private static function ruta($carpeta){
 
     $ruta = self::crear($carpeta."/");
@@ -19,13 +21,37 @@ class Upload {
     return $ruta;
   }
 
+
+
   public static function ruta_noticias(){
 
-    return self::ruta('noticias');
+    return self::ruta('contenido/noticias');
+  }
+
+
+
+  public static function ruta_css(){
+
+    return self::ruta('contenido/css');
+  }
+
+
+
+  public static function ruta_js(){
+
+    return self::ruta('contenido/js');
   }
 
   //////////////////////////////////////////////////////////////
-  ////////////////IMAGEN
+  ////////////////text
+  //////////////////////////////////////////////////////////////
+  private static function txt($archivo,$txt){
+    fwrite($archivo,$txt);
+    fclose($archivo);
+  }
+
+  //////////////////////////////////////////////////////////////
+  ////////////////MP3
   //////////////////////////////////////////////////////////////
   public static function mp3($mp3){
     if($mp3)
@@ -133,6 +159,29 @@ class Upload {
 		{
       return $match[1];
 		}
+  }
+
+  //////////////////////////////////////////////////////////////
+  ////////////////CSS
+  //////////////////////////////////////////////////////////////
+  public static function css($nombre,$css){
+
+    $archivo = fopen(self::ruta_css().$nombre, "w+");
+    $r = self::txt($archivo,$css);
+
+    return $r;
+  }
+
+
+  //////////////////////////////////////////////////////////////
+  ////////////////JS
+  //////////////////////////////////////////////////////////////
+  public static function js($nombre,$js){
+
+    $archivo = fopen(self::ruta_js().$nombre, "w+");
+    $r = self::txt($archivo,$js);
+
+    return $r;
   }
 
 

@@ -37,7 +37,9 @@ Route::group(['prefix' => 'cms'], function () {
 
     Route::match(['post','delete'],'link/{id?}', [App\Http\Controllers\DisenoController::class, 'link']);
 
-    Route::get('css/', [App\Http\Controllers\DisenoController::class, 'css']);
+    Route::match(['get','post','patch','delete'],'css/{id?}', [App\Http\Controllers\DisenoController::class, 'css']);
+
+    Route::match(['get','post','patch','delete'],'js/{id?}', [App\Http\Controllers\DisenoController::class, 'js']);
   });
 
   Route::match(['post','get','patch','delete'],'/prensa/{noticiaId?}', [App\Http\Controllers\CmsController::class, 'prensa']);

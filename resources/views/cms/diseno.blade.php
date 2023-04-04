@@ -227,20 +227,20 @@
 
                   <p>&nbsp;</p>
 
-                  @foreach($csss as $css)
+                  @foreach($csss as $key => $css)
                     <div class="form-group">
                       <label class="col-md-1 control-label"></label>
                       <div class="col-md-10 col-xs-12">
                         <div class="input-group">
                           <span class="input-group-addon">&lt;link</span>
-                          <input type="text" class="form-control" value="{{ $css->atributos }}" readonly />
+                          <input type="text" class="form-control" value="{{ $css['atributos'] }}" readonly />
                           <span class="input-group-addon add-on"> href=&quot; </span>
-                          <input type="text" class="form-control" value="{{ $css->archivo }}" readonly />
+                          <input type="text" class="form-control" value="{{ $css['archivo'] }}" readonly />
                           <span class="input-group-addon">&quot;&gt;</span>
                           <span class="input-group-btn">
-                            <a class="btn btn-success btn-condensed" tabindex="{{ $tabindex }}" href="{{ url(CONTENIDOS.'/css/'.$css->archivo) }}" download="{{ $css->archivo }}" ><i class="far fa-download"></i> Descargar</a>
-                            <a class="btn btn-warning btn-condensed" tabindex="{{ $tabindex }}" href="{{ url('cms/config/css/'.$css->id.'/edit') }}"><i class="far fa-pencil-alt"></i> Editar</a>
-                            <a class="btn btn-danger btn-condensed mb-control" tabindex="{{ $tabindex }}" data-box="#css-{{ $css->id }}"><i class="far fa-times"></i> Borrar</a>
+                            <a class="btn btn-success btn-condensed" tabindex="{{ $tabindex }}" href="{{ url('contenido/css/'.$css['archivo']) }}" download="{{ $css['archivo'] }}" ><i class="far fa-download"></i> Descargar</a>
+                            <a class="btn btn-warning btn-condensed" tabindex="{{ $tabindex }}" href="{{ url('cms/config/css/'.$key) }}"><i class="far fa-pencil-alt"></i> Editar</a>
+                            <a class="btn btn-danger btn-condensed mb-control" tabindex="{{ $tabindex }}" data-box="#css-{{ $key }}"><i class="far fa-times"></i> Borrar</a>
                           </span>
                         </div>
                       </div>
@@ -296,20 +296,20 @@
 
                   <p>&nbsp;</p>
 
-                  @foreach($jss as $js)
+                  @foreach($jss as $key => $js)
                     <div class="form-group">
                       <label class="col-md-1 control-label"></label>
                       <div class="col-md-10 col-xs-12">
                         <div class="input-group">
                           <span class="input-group-addon">&lt;script&gt;</span>
-                          <input id="js{{ $js->id }}" type="text" class="form-control" value="{{ $js->atributos }}" readonly />
+                          <input id="js{{ $key }}" type="text" class="form-control" value="{{ $js['atributos'] }}" readonly />
                           <span class="input-group-addon add-on"> href=&quot; </span>
-                          <input id="js{{ $js->id }}href" type="text" class="form-control" value="{{ $js->archivo }}" readonly />
+                          <input id="js{{ $key }}href" type="text" class="form-control" value="{{ $js['archivo'] }}" readonly />
                           <span class="input-group-addon">&quot; &lt;/script&gt;</span>
                           <span class="input-group-btn">
-                            <a class="btn btn-success btn-condensed" tabindex="{{ $tabindex }}" href="{{ url(CONTENIDOS.'/js/'.$js->archivo) }}" download="{{ $js->archivo }}" ><i class="far fa-download"></i> Descargar</a>
-                            <a class="btn btn-warning btn-condensed" tabindex="{{ $tabindex }}" href="{{ url('cms/config/js/'.$js->id.'/edit') }}"><i class="far fa-pencil-alt"></i> Editar</a>
-                            <a class="btn btn-danger btn-condensed mb-control" tabindex="{{ $tabindex }}" data-box="#js-{{ $js->id }}"><i class="far fa-times"></i> Borrar</a>
+                            <a class="btn btn-success btn-condensed" tabindex="{{ $tabindex }}" href="{{ url('contenido/js/'.$js['archivo']) }}" download="{{ $js['archivo'] }}" ><i class="far fa-download"></i> Descargar</a>
+                            <a class="btn btn-warning btn-condensed" tabindex="{{ $tabindex }}" href="{{ url('cms/config/js/'.$key) }}"><i class="far fa-pencil-alt"></i> Editar</a>
+                            <a class="btn btn-danger btn-condensed mb-control" tabindex="{{ $tabindex }}" data-box="#js-{{ $key }}"><i class="far fa-times"></i> Borrar</a>
                           </span>
                         </div>
                       </div>
@@ -968,8 +968,8 @@
 
 
 
-@foreach($csss as $css)
-<div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="css-{{ $css->id }}">
+@foreach($maqueta['css'] as $key => $css)
+<div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="css-{{ $key }}">
   <div class="mb-container">
     <div class="mb-middle">
       <div class="mb-title"><span class="fa fa-times"></span>¿ Borrar archivo <strong>CSS</strong> ?</div>
@@ -980,7 +980,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/config/css/'.$css->id) }}" method="POST">
+          <form action="{{ url('cms/config/css/'.$key) }}" method="POST">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -1025,8 +1025,8 @@
 
 
 
-@foreach($jss as $js)
-<div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="js-{{ $js->id }}">
+@foreach($maqueta['js'] as $key => $js)
+<div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="js-{{ $key }}">
   <div class="mb-container">
     <div class="mb-middle">
       <div class="mb-title"><span class="fa fa fa-times"></span>¿ Borrar archivo <strong>JS</strong> ?</div>
@@ -1037,7 +1037,7 @@
       </div>
       <div class="mb-footer">
         <div class="pull-right">
-          <form action="{{ url('cms/config/js/'.$js->id) }}" method="POST">
+          <form action="{{ url('cms/config/js/'.$key) }}" method="POST">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
