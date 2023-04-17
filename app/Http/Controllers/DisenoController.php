@@ -31,13 +31,37 @@ class DisenoController extends Controller
                  "tema" => 1,
                  "titulo" => "Municipio de ???",
                  "descripcion" => "Sitio web oficial del Municipio ??? con toda la información general, turística, servicios y más que necesitas de tu gobierno municipal.",
+                 "bodyattributes" => "bodyattributes",
+                 "bodyafter" => "bodyafter",
+                 "columnasafter" => "columnasafter",
+                 "columnasbefore" => "columnasbefore",
+
+                 "izquierdabeforeg" => "izquierdabeforeg",
+                 "izquierdaafterg" => "izquierdaafterg",
+                 "derechabefores" => "derechabefores",
+                 "derechaafters" => "derechaafters",
+
+                 "izquierdabefores" => "izquierdabefores",
+                 "izquierdaafters" => "izquierdaafters",
+                 "derechabeforeg" => "derechabeforeg",
+                 "derechaafterg" => "derechaafterg",
+
+                 "superiorbefore" => "superiorbefore",
+                 "superiorafter" => "superiorafter",
+                 "izquierdabefore3" => "izquierdabefore3",
+                 "izquierdaafter3" => "izquierdaafter3",
+                 "centrobefore3" => "centrobefore3",
+                 "centroafter3" => "centroafter3",
+                 "derechabefore3" => "derechabefore3",
+                 "derechaafter3" => "derechaafter3",
+                 "inferiorbefore" => "inferiorbefore",
+                 "inferiorafter" => "inferiorafter",
+
+                 "izquierdabefores" => "izquierdabefores",
+                 "izquierdaafters" => "izquierdaafters",
+                 "derechabeforeg" => "derechabeforeg",
+                 "izquierdaafters" => "izquierdaafters",
                 ];
-
-    $q = ["collection" => 'config',
-          "document"   => $document,
-         ];
-
-    $res = $this->mongo($q,"I");
 
     $maqueta = [
         "tema" => 1,
@@ -47,11 +71,9 @@ class DisenoController extends Controller
         "js" => [],
        ];
 
-    $q = ["collection" => 'maqueta',
-          "document"   => $maqueta,
-        ];
+    $res = Config::mongo('config',$document,"I");
 
-    $res = $this->mongo($q,"I");
+    $res = Config::mongo('maqueta',$maqueta,"I");
   }
 
 
@@ -100,34 +122,26 @@ class DisenoController extends Controller
 
 
 
-  public function head(ConfigRequest $request)
+  public function body(ConfigRequest $request)
   {
-    $document = [
-                 "titulo" => $request->input('titulo'),
-                 "descripcion" => $request->input('descripcion'),
-                ];
-
-    $q = [  "collection" => 'config',
-            "filter"     => ['_id' => [ "\$oid" => $this->config()['_id'] ]],
-            "update"     => ["\$set" => $document],
-         ];
-
-    $r = $this->mongo($q,"U");
+    $r = Config::mongo('config',["bodyattributes" => $request->input('bodyattributes'),"bodyafter" => $request->input('bodyafter'),],"U");
 
     if(isset($r['modifiedCount']))
     {
-        \Session::flash('success', 'El título y descripción se actualizó correctamente.');
+        \Session::flash('success', 'El BODY se actualizó correctamente.');
     }
 
-    return \Redirect::to('cms/diseno/head');
+    return \Redirect::to('cms/diseno/body');
   }
+
+
 
 
 
   public function meta(ConfigRequest $request)
   {
 
-    $array = $this->maqueta()['metas'];
+    $array = Config::maqueta()['metas'];
 
     if($request->method() == "POST")
     {
@@ -140,14 +154,8 @@ class DisenoController extends Controller
         unset($array[$request->route()->id]);
     }
 
-    $document = [ "metas" => $array,];
+    $r = Config::mongo('maqueta',["metas" => $array,],'U');
 
-    $q = [  "collection" => 'maqueta',
-            "filter"     => ['_id' => [ "\$oid" => $this->maqueta()['_id'] ]],
-            "update"     => ["\$set" => $document],
-         ];
-
-    $r = $this->mongo($q,'U');
 
     if(isset($r['modifiedCount']))
     {
@@ -163,7 +171,7 @@ class DisenoController extends Controller
 
   public function link(ConfigRequest $request)
   {
-    $array = $this->maqueta()['links'];
+    $array = Config::maqueta()['links'];
 
     if($request->method() == "POST")
     {
@@ -182,14 +190,8 @@ class DisenoController extends Controller
         @unlink('imagenes/favicon.png');
     }
 
-    $document = [ "links" => $array,];
 
-    $q = [  "collection" => 'maqueta',
-            "filter"     => ['_id' => [ "\$oid" => $this->maqueta()['_id'] ]],
-            "update"     => ["\$set" => $document],
-         ];
-
-    $r = $this->mongo($q,'U');
+    $r = Config::mongo('maqueta',[ "links" => $array,],'U');
 
     if(isset($r['modifiedCount']))
     {

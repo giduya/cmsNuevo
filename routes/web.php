@@ -33,6 +33,8 @@ Route::group(['prefix' => 'cms'], function () {
   Route::group(['prefix' => 'config'], function () {
     Route::patch('head', [App\Http\Controllers\DisenoController::class, 'head']);
 
+    Route::patch('body', [App\Http\Controllers\DisenoController::class, 'body']);
+
     Route::match(['post','delete'],'meta/{id?}', [App\Http\Controllers\DisenoController::class, 'meta']);
 
     Route::match(['post','delete'],'link/{id?}', [App\Http\Controllers\DisenoController::class, 'link']);

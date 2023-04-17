@@ -54,14 +54,7 @@ class Css extends Model
 
     public static function actualizar($csss)
     {
-        $document = [ "css" => $csss,];
-
-        $q = [  "collection" => 'maqueta',
-                "filter"     => ['_id' => [ "\$oid" => Config::maqueta()['_id'] ]],
-                "update"     => ["\$set" => $document],
-            ];
-
-        return Config::mongo($q,'U');
+        return Config::mongo('maqueta',[ "css" => $csss,],'U');
     }
 
 

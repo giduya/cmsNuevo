@@ -10,7 +10,7 @@ class Config extends Model
     use HasFactory;
 
 
-    public static function mongo($query,$accion)
+    public static function mongo($sq,$doc,$accion)
     {
       switch($accion)
       {
@@ -31,10 +31,55 @@ class Config extends Model
           break;
       }
 
+
+      switch($sq)
+      {
+        case 'config':
+            if($accion == "U")
+            {
+                $q = [  "collection" => 'config',
+                        "filter"     => ['_id' => [ "\$oid" => Config::config()['_id'] ]],
+                        "update"     => ["\$set" => $doc],
+                     ];
+            }
+            elseif($accion == "O")
+            {
+                $q = ["collection" => 'config',];
+            }
+            elseif($accion == "I")
+            {
+                $q = ["collection" => 'config',
+                      "document"   => $doc,];
+            }
+        break;
+        case 'maqueta':
+            if($accion == "U")
+            {
+                $q = [  "collection" => 'maqueta',
+                        "filter"     => ['_id' => [ "\$oid" => self::maqueta()['_id'] ]],
+                        "update"     => ["\$set" => $doc],
+                    ];
+            }
+            elseif($accion == "O")
+            {
+                $q = [  "collection" => 'maqueta',
+                        "filter"     => ['tema' => self::config()['tema']]
+                    ];
+            }
+            elseif($accion == "I")
+            {
+                $q = ["collection" => 'maqueta',
+                      "document"   => $doc,];
+            }
+          break;
+      }
+
+
+
       $bd = ["dataSource" => "Cluster0",
              "database"   => "bd_",];
 
-      $bd = array_merge($bd,$query);
+      $bd = array_merge($bd,$q);
 
       $api = 'Fwn0XMexvkq7vOpND6pPxFdSuIkr02nSiW181nmeYjh9EddV6YzrCCVU0tqQn05m';
       $url = 'https://data.mongodb-api.com/app/data-iesxm/endpoint/data/v1/action/'.$i;
@@ -52,9 +97,7 @@ class Config extends Model
 
     public static function config()
     {
-      $q = ["collection" => 'config',];
-
-      $config = self::mongo($q,'O')['document'];
+      $config = self::mongo('config','doc','O')['document'];
 
       return $config;
     }
@@ -63,12 +106,26 @@ class Config extends Model
 
     public static function maqueta()
     {
-      $q = ["collection" => 'maqueta',
-            "filter"     => ['tema' => self::config()['tema']]];
-
-      $maqueta = self::mongo($q,'O')['document'];
+      $maqueta = self::mongo('maqueta','doc','O')['document'];
 
       return $maqueta;
     }
 
+
+
+    public static function consulta($q,$doc)
+    {
+        switch($q)
+        {
+          case 'head':
+            $q = [  "collection" => 'config',
+                    "filter"     => ['_id' => [ "\$oid" => Config::config()['_id'] ]],
+                    "update"     => ["\$set" => $doc],
+                 ];
+            break;
+          case 'maqueta':
+            $i = 'find';
+            break;
+        }
+    }
 }

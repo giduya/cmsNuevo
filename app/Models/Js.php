@@ -53,14 +53,7 @@ class Js extends Model
 
     public static function actualizar($jss)
     {
-        $document = [ "js" => $jss,];
-
-        $q = [  "collection" => 'maqueta',
-                "filter"     => ['_id' => [ "\$oid" => Config::maqueta()['_id'] ]],
-                "update"     => ["\$set" => $document],
-            ];
-
-        return Config::mongo($q,'U');
+        return Config::mongo('maqueta',["js" => $jss,],'U');
     }
 
 
