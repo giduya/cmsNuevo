@@ -152,7 +152,7 @@
               <div class="panel-body">
 
 
-                <form name="validate" class="form-horizontal" autocomplete="off" action="{{ url('cms/config/body') }}" method="POST">
+                <form name="validate" class="form-horizontal" autocomplete="off" action="{{ url('cms/config/titulo') }}" method="POST">
 
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <input type="hidden" name="_method" value="PATCH">
@@ -415,15 +415,15 @@
               Los atributos que uses en <code>BODY</code>, en esta sección se aplicarán a todas las páginas.
               <p>&nbsp;</p>
 
-              <form id="form" name="validate" class="form-horizontal" action="{{ url('cms/config/body') }}" method="POST" autocomplete="off">
+              <form id="html" name="validate" class="form-horizontal" action="{{ url('cms/config/html') }}" method="POST" autocomplete="off">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="_method" value="PATCH">
+                <input type="hidden" name="_method" value="PUT">
 
                 <div class="form-group">
                   <div class="col-md-12 col-xs-12">
                     <div class="input-group">
                       <span class="input-group-addon">&lt;body</span>
-                      <input id="bodyattributes" type="text" class="validate[maxSize[255]] form-control" autofocus maxlength="255" placeholder="Agrega tus atributos" name="bodyattributes" value="{{ $config['bodyattributes'] }}" tabindex="{{ ++$tabindex }}">
+                      <input id="bodyattributes" type="text" class="validate[maxSize[255]] form-control" autofocus maxlength="255" placeholder="Agrega tus atributos" name="bodyattributes" value="{{ $maqueta['html']['bodyattributes'] }}" tabindex="{{ ++$tabindex }}">
                       <span class="input-group-addon">&gt;</span>
                     </div>
                   </div>
@@ -432,7 +432,7 @@
                 <div class="form-group">
                   <div class="col-md-12 col-xs-12">
                     <p>
-                      <textarea rows="4" name="bodyafter" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['bodyafter'] }}</textarea>
+                      <textarea rows="4" name="bodyafter" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['bodyafter'] }}</textarea>
                     </p>
                     <span class="help-block"><code>El código que agregues aquí será el que aparece después del <code>&lt;BODY></code></code></span>
                   </div>
@@ -445,7 +445,7 @@
                 <div class="form-group">
                   <div class="col-md-12 col-xs-12">
                     <p>
-                      <textarea rows="4" name="columnasbefore" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['columnasbefore'] }}</textarea>
+                      <textarea rows="4" name="columnasbefore" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['columnasbefore'] }}</textarea>
                     </p>
                     <span class="help-block"><code>El código que agregues aquí será el que envolverá a las columnas (inicia conteiner)</code></span>
                   </div>
@@ -482,7 +482,7 @@
                 <div class="form-group">
                   <div class="col-md-12 col-xs-12">
                     <p>
-                      <textarea rows="4" name="columnasafter" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['columnasafter'] }}</textarea>
+                      <textarea rows="4" name="columnasafter" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['columnasafter'] }}</textarea>
                     </p>
                     <span class="help-block"><code>El código que agregues aquí será el que envolverá a las columnas (finaliza conteiner)</code></span>
                   </div>
@@ -510,10 +510,6 @@
                         Editar Layout
                       </h4>
                     </div>
-                    <form id="layout9" method="post" action="{{ url('cms/config/layout') }}" autocomplete="off">
-                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      <input type="hidden" name="_method" value="PUT">
-                      <input type="hidden" name="layout" value="9">
 
                       <div class="modal-body form-horizontal">
                         <br>
@@ -526,14 +522,14 @@
                               <div class="form-group">
                                 <div class="col-md-12 col-xs-12">
                                   <p>
-                                    <textarea rows="4" name="izquierdabeforeg" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['izquierdabeforeg'] }}</textarea>
+                                    <textarea form="html" rows="4" name="izquierdabeforeg" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['izquierdabeforeg'] }}</textarea>
                                   </p>
                                   <div class="input-group">
                                     <code>&lt;contenido&gt;</code>
                                   </div>
                                   <br>
                                   <p>
-                                    <textarea rows="4" name="izquierdaafterg" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['izquierdaafterg'] }}</textarea>
+                                    <textarea form="html" rows="4" name="izquierdaafterg" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['izquierdaafterg'] }}</textarea>
                                   </p>
                                 </div>
                               </div>
@@ -549,14 +545,14 @@
                               <div class="form-group">
                                 <div class="col-md-12 col-xs-12">
                                   <p>
-                                    <textarea rows="4" name="derechabefores" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['derechabefores'] }}</textarea>
+                                    <textarea form="html" rows="4" name="derechabefores" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['derechabefores'] }}</textarea>
                                   </p>
                                   <div class="input-group">
                                     <code>&lt;contenido&gt;</code>
                                   </div>
                                   <br>
                                   <p>
-                                    <textarea rows="4" name="derechaafters" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['derechaafters'] }}</textarea>
+                                    <textarea form="html" rows="4" name="derechaafters" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['derechaafters'] }}</textarea>
                                   </p>
                                 </div>
                               </div>
@@ -565,10 +561,9 @@
                         </div>
                       </div><!--modal-body-->
                       <div class="modal-footer">
-                        <button type="submit" class="btn btn-info">Enviar</button>
+                        <button type="submit" form="html" class="btn btn-info">Enviar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                       </div>
-                    </form>
                   </div><!--modal-content-->
                 </div><!--modal-dialog-->
               </div><!--modal animated-->
@@ -583,11 +578,6 @@
                         Editar Layout
                       </h4>
                     </div>
-                    <form id="layout8" method="post" action="{{ url('cms/config/layout') }}" autocomplete="off">
-                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      <input type="hidden" name="_method" value="PUT">
-                      <input type="hidden" name="layout" value="8">
-
                       <div class="modal-body form-horizontal">
                         <br>
                         <div class="col-md-4">
@@ -600,13 +590,13 @@
                               <div class="form-group">
                                 <div class="col-md-12 col-xs-12">
                                   <p>
-                                    <textarea rows="2" name="izquierdabefores" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['izquierdabefores'] }}</textarea>
+                                    <textarea rows="2" form="html" name="izquierdabefores" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['izquierdabefores'] }}</textarea>
                                   </p>
                                   <div class="input-group">
                                     <code>&lt;contenido&gt;</code>
                                   </div>
                                   <p>
-                                    <textarea rows="2" name="izquierdaafters" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['izquierdabefores'] }}</textarea>
+                                    <textarea rows="2" form="html" name="izquierdaafters" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['izquierdaafters'] }}</textarea>
                                   </p>
                                 </div>
                               </div>
@@ -625,13 +615,13 @@
                               <div class="form-group">
                                 <div class="col-md-12 col-xs-12">
                                   <p>
-                                    <textarea rows="2" name="derechabeforeg" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['derechabeforeg'] }}</textarea>
+                                    <textarea rows="2" form="html" name="derechabeforeg" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['derechabeforeg'] }}</textarea>
                                   </p>
                                   <div class="input-group">
                                     <code>&lt;contenido&gt;</code>
                                   </div>
                                   <p>
-                                    <textarea rows="2" name="derechaafterg" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['derechaafterg'] }}</textarea>
+                                    <textarea rows="2" form="html" name="derechaafterg" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['derechaafterg'] }}</textarea>
                                   </p>
                                 </div>
                               </div>
@@ -641,10 +631,9 @@
                         </div>
                       </div><!--modal-body-->
                       <div class="modal-footer">
-                        <button type="submit" class="btn btn-info">Enviar</button>
+                        <button type="submit" form="html" class="btn btn-info">Enviar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                       </div>
-                    </form>
                   </div><!--modal-content-->
                 </div><!--modal-dialog-->
               </div><!--modal animated-->
@@ -659,11 +648,6 @@
                         Editar Layout
                       </h4>
                     </div>
-                    <form id="layout3" method="post" action="{{ url('cms/config/layout') }}" autocomplete="off">
-                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      <input type="hidden" name="_method" value="PUT">
-                      <input type="hidden" name="layout" value="3">
-
                       <div class="modal-body form-horizontal">
                         <div class="col-md-12">
                           <div class="panel panel-default">
@@ -674,13 +658,13 @@
                               <div class="form-group">
                                 <div class="col-md-12 col-xs-12">
                                   <p>
-                                    <textarea rows="1" name="superiorbefore" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['superiorbefore'] }}</textarea>
+                                    <textarea rows="1" form="html" name="superiorbefore" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['superiorbefore'] }}</textarea>
                                   </p>
                                   <div class="input-group">
                                     <code>&lt;contenido&gt;</code>
                                   </div>
                                   <p>
-                                    <textarea rows="1" name="superiorafter" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['superiorafter'] }}</textarea>
+                                    <textarea rows="1" form="html" name="superiorafter" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['superiorafter'] }}</textarea>
                                   </p>
                                 </div>
                               </div>
@@ -698,13 +682,13 @@
                               <div class="form-group">
                                 <div class="col-md-12 col-xs-12">
                                   <p>
-                                    <textarea rows="1" name="izquierdabefore3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['izquierdabefore3'] }}</textarea>
+                                    <textarea rows="1" form="html" name="izquierdabefore3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['izquierdabefore3'] }}</textarea>
                                   </p>
                                   <div class="input-group">
                                     <code>&lt;contenido&gt;</code>
                                   </div>
                                   <p>
-                                    <textarea rows="1" name="izquierdaafter3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['izquierdaafter3'] }}</textarea>
+                                    <textarea rows="1" form="html" name="izquierdaafter3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['izquierdaafter3'] }}</textarea>
                                   </p>
                                 </div>
                               </div>
@@ -723,13 +707,13 @@
                               <div class="form-group">
                                 <div class="col-md-12 col-xs-12">
                                   <p>
-                                    <textarea rows="1" name="centrobefore3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['centrobefore3'] }}</textarea>
+                                    <textarea rows="1" form="html" name="centrobefore3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['centrobefore3'] }}</textarea>
                                   </p>
                                   <div class="input-group">
                                     <code>&lt;contenido&gt;</code>
                                   </div>
                                   <p>
-                                    <textarea rows="1" name="centroafter3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['centroafter3'] }}</textarea>
+                                    <textarea rows="1" form="html" name="centroafter3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['centroafter3'] }}</textarea>
                                   </p>
                                 </div>
                               </div>
@@ -748,13 +732,13 @@
                               <div class="form-group">
                                 <div class="col-md-12 col-xs-12">
                                   <p>
-                                    <textarea rows="1" name="derechabefore3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['derechabefore3'] }}</textarea>
+                                    <textarea rows="1" form="html" name="derechabefore3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['derechabefore3'] }}</textarea>
                                   </p>
                                   <div class="input-group">
                                     <code>&lt;contenido&gt;</code>
                                   </div>
                                   <p>
-                                    <textarea rows="1" name="derechaafter3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['derechaafter3'] }}</textarea>
+                                    <textarea rows="1" form="html" name="derechaafter3" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['derechaafter3'] }}</textarea>
                                   </p>
                                 </div>
                               </div>
@@ -772,13 +756,13 @@
                               <div class="form-group">
                                 <div class="col-md-12 col-xs-12">
                                   <p>
-                                    <textarea rows="1" name="inferiorbefore" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['inferiorbefore'] }}</textarea>
+                                    <textarea rows="1" form="html" name="inferiorbefore" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['inferiorbefore'] }}</textarea>
                                   </p>
                                   <div class="input-group">
                                     <code>&lt;contenido&gt;</code>
                                   </div>
                                   <p>
-                                    <textarea rows="1" name="inferiorafter" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $config['inferiorafter'] }}</textarea>
+                                    <textarea rows="1" form="html" name="inferiorafter" tabindex="{{ ++$tabindex }}" placeholder="Agrega tu código html" class="form-control">{{ $maqueta['html']['inferiorafter'] }}</textarea>
                                   </p>
                                 </div>
                               </div>
@@ -787,10 +771,9 @@
                         </div>
                       </div><!--modal-body-->
                       <div class="modal-footer">
-                        <button type="submit" tabindex="{{ ++$tabindex }}" class="btn btn-info">Enviar</button>
+                        <button type="submit" form="html" tabindex="{{ ++$tabindex }}" class="btn btn-info">Enviar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                       </div>
-                    </form>
                   </div><!--modal-content-->
                 </div><!--modal-dialog-->
               </div><!--modal animated-->

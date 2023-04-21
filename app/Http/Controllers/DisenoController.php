@@ -27,10 +27,13 @@ class DisenoController extends Controller
   public function instalar()
   {
     ///////////////////////////////////////////////////////////////////////
-    $document = [
-                 "tema" => 1,
-                 "titulo" => "Municipio de ???",
-                 "descripcion" => "Sitio web oficial del Municipio ??? con toda la información general, turística, servicios y más que necesitas de tu gobierno municipal.",
+    $config = [
+                "tema" => 1,
+                "titulo" => "Municipio de ???",
+                "descripcion" => "Sitio web oficial del Municipio ??? con toda la información general, turística, servicios y más que necesitas de tu gobierno municipal.",
+            ];
+
+    $html = [
                  "bodyattributes" => "bodyattributes",
                  "bodyafter" => "bodyafter",
                  "columnasafter" => "columnasafter",
@@ -69,9 +72,10 @@ class DisenoController extends Controller
         "links" => [],
         "css" => [],
         "js" => [],
+        "html" => $html,
        ];
 
-    $res = Config::mongo('config',$document,"I");
+    $res = Config::mongo('config',$config,"I");
 
     $res = Config::mongo('maqueta',$maqueta,"I");
   }
@@ -102,7 +106,6 @@ class DisenoController extends Controller
     $partidos = [];
     $tipos_modulo = [];
     $fondos= [];
-    $body = [];
 
     return view('cms.diseno')->with('pestana',$pestana)
                              ->with('maqueta',$maqueta)
@@ -115,20 +118,65 @@ class DisenoController extends Controller
                              ->with('partidos',$partidos)
                              ->with('tipos_modulo',$tipos_modulo)
                              ->with('fondos',$fondos)
-                             ->with('body',$body)
                              ->with('config',Config::config());
   }
 
 
 
 
-  public function body(ConfigRequest $request)
+
+  public function titulo(ConfigRequest $request)
   {
-    $r = Config::mongo('config',["bodyattributes" => $request->input('bodyattributes'),"bodyafter" => $request->input('bodyafter'),],"U");
+        $array = ["titulo" => $request->input('titulo'),
+                  "descripcion" => $request->input('descripcion'),];
+
+        $r = Config::mongo('config',$array,"U");
+
+        if(isset($r['modifiedCount']))
+        {
+            \Session::flash('success', 'El título y descripción se actualizaron correctamente.');
+        }
+
+        return \Redirect::to('cms/diseno/head');
+  }
+
+
+
+
+
+
+
+  public function html(Request $request)
+  {
+    $array = ["bodyattributes" => $request->input('bodyattributes'),
+              "bodyafter" => $request->input('bodyafter'),
+              "columnasbefore" => $request->input('columnasbefore'),
+              "columnasafter" => $request->input('columnasafter'),
+              "izquierdabeforeg" => $request->input('izquierdabeforeg'),
+              "izquierdaafterg" => $request->input('izquierdaafterg'),
+              "derechabefores" => $request->input('derechabefores'),
+              "derechaafters" => $request->input('derechaafters'),
+              "izquierdabefores" => $request->input('izquierdabefores'),
+              "izquierdaafters" => $request->input('izquierdaafters'),
+              "derechabeforeg" => $request->input('derechabeforeg'),
+              "derechaafterg" => $request->input('derechaafterg'),
+              "superiorbefore" => $request->input('superiorbefore'),
+              "superiorafter" => $request->input('superiorafter'),
+              "izquierdabefore3" => $request->input('izquierdabefore3'),
+              "izquierdaafter3" => $request->input('izquierdaafter3'),
+              "centrobefore3" => $request->input('centrobefore3'),
+              "centroafter3" => $request->input('centroafter3'),
+              "derechabefore3" => $request->input('derechabefore3'),
+              "derechaafter3" => $request->input('derechaafter3'),
+              "inferiorbefore" => $request->input('inferiorbefore'),
+              "inferiorafter" => $request->input('inferiorafter'),
+            ];
+
+    $r = Config::mongo('maqueta',['html' => $array],"U");
 
     if(isset($r['modifiedCount']))
     {
-        \Session::flash('success', 'El BODY se actualizó correctamente.');
+        \Session::flash('success', 'Los datos se actualizaron correctamente.');
     }
 
     return \Redirect::to('cms/diseno/body');

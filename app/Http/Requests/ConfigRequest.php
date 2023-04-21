@@ -17,10 +17,12 @@ class ConfigRequest extends FormRequest {
 	public function messages()
 	{
 	  return [
-						'atributos.required' => 'Los "atributos" de la etiqueta META son obligatorios.',
-						'atributos.max'      => 'Los "atributos" de la etiqueta META no pueden rebasar los 255 caracteres.',
-						'bodyattributes.max' => 'Los "atributos" del body" no pueden rebasar los 255 caracteres.',
-					 ];
+                'titulo.required' => 'Olvidaste indicar el título.',
+                'descripcion.required' => 'Olvidaste indicar la descripción.',
+				'atributos.required' => 'Los "atributos" de la etiqueta META son obligatorios.',
+				'atributos.max'      => 'Los "atributos" de la etiqueta META no pueden rebasar los 255 caracteres.',
+				'bodyattributes.max' => 'Los "atributos" del body" no pueden rebasar los 255 caracteres.',
+			 ];
 	}
 
 

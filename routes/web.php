@@ -31,9 +31,9 @@ Route::group(['prefix' => 'cms'], function () {
   Route::get('/diseno/{pestana}', [App\Http\Controllers\DisenoController::class, 'diseno']);
 
   Route::group(['prefix' => 'config'], function () {
-    Route::patch('head', [App\Http\Controllers\DisenoController::class, 'head']);
+    Route::put('html', [App\Http\Controllers\DisenoController::class, 'html']);
 
-    Route::patch('body', [App\Http\Controllers\DisenoController::class, 'body']);
+    Route::patch('titulo', [App\Http\Controllers\DisenoController::class, 'titulo']);
 
     Route::match(['post','delete'],'meta/{id?}', [App\Http\Controllers\DisenoController::class, 'meta']);
 
