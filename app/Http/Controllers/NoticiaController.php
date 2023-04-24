@@ -19,10 +19,7 @@ class NoticiaController extends Controller
 
 
 
-  public function index()
-  {
-    return view('cms.inicio');
-  }
+
 
 
 

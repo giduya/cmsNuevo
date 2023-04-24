@@ -137,6 +137,12 @@ class DisenoController extends Controller
             \Session::flash('success', 'El título y descripción se actualizaron correctamente.');
         }
 
+        $maqueta = Config::maqueta();
+
+        $r = Storage::disk('public')->put('maqueta.json', json_encode($data));
+
+        dd($r); exit;
+
         return \Redirect::to('cms/diseno/head');
   }
 

@@ -21,12 +21,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/apps', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/apps', [App\Http\Controllers\WebController::class, 'index'])->name('home');
 
 Route::group(['prefix' => 'cms'], function () {
 
   /*CMS*/ /*INICIO*/
-  Route::get('/', [App\Http\Controllers\CmsController::class, 'index']);
+  Route::get('/', [App\Http\Controllers\WebController::class, 'cmsIndex']);
 
   Route::get('/diseno/{pestana}', [App\Http\Controllers\DisenoController::class, 'diseno']);
 

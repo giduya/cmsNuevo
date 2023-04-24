@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class WebController extends Controller
 {
 
   public function __construct()
@@ -12,9 +12,26 @@ class HomeController extends Controller
 
 
 
+
   public function index()
   {
     return view('apps');
+  }
+
+
+
+
+  public function cmsIndex()
+  {
+    return view('cms.inicio');
+  }
+
+
+
+
+  public function cmsIndex()
+  {
+    return view('cms.inicio');
   }
 
 }
