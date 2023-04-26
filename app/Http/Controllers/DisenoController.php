@@ -78,19 +78,20 @@ class DisenoController extends Controller
     $res = Config::mongo('config',$config,"I");
 
     $res = Config::mongo('maqueta',$maqueta,"I");
+
+    $this->json();
   }
 
 
 
 
 
+  public function json()
+  {
+    $maqueta = Config::maqueta();
 
-
-
-
-
-
-
+    $r = \Storage::disk('public')->put('maqueta.json', json_encode($maqueta));
+  }
 
 
 
@@ -135,13 +136,9 @@ class DisenoController extends Controller
         if(isset($r['modifiedCount']))
         {
             \Session::flash('success', 'El título y descripción se actualizaron correctamente.');
+
+            $this->json();
         }
-
-        $maqueta = Config::maqueta();
-
-        $r = Storage::disk('public')->put('maqueta.json', json_encode($data));
-
-        dd($r); exit;
 
         return \Redirect::to('cms/diseno/head');
   }
@@ -182,7 +179,9 @@ class DisenoController extends Controller
 
     if(isset($r['modifiedCount']))
     {
-        \Session::flash('success', 'Los datos se actualizaron correctamente.');
+      \Session::flash('success', 'Los datos se actualizaron correctamente.');
+
+      $this->json();
     }
 
     return \Redirect::to('cms/diseno/body');
@@ -214,6 +213,8 @@ class DisenoController extends Controller
     if(isset($r['modifiedCount']))
     {
         \Session::flash('success', 'La etiqueta META se editó correctamente.');
+
+        $this->json();
     }
 
     return \Redirect::to('cms/diseno/head');
@@ -250,6 +251,8 @@ class DisenoController extends Controller
     if(isset($r['modifiedCount']))
     {
         \Session::flash('success', 'La etiqueta LINK se editó correctamente.');
+
+        $this->json();
     }
 
     return \Redirect::to('cms/diseno/head');
@@ -328,6 +331,8 @@ class DisenoController extends Controller
     if(isset($r['modifiedCount']))
     {
         \Session::flash('success', $success);
+
+        $this->json();
     }
     elseif(isset(($r['danger'])))
     {
@@ -402,6 +407,8 @@ class DisenoController extends Controller
     if(isset($r['modifiedCount']))
     {
         \Session::flash('success', $success);
+
+        $this->json();
     }
 
     return \Redirect::to('cms/diseno/head');

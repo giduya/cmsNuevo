@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/instalar', [App\Http\Controllers\DisenoController::class, 'instalar']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\LandingController::class, 'landing']);
 
 Auth::routes();
 

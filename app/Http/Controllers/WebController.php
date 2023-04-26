@@ -13,17 +13,19 @@ class WebController extends Controller
 
 
 
-  public function index()
+  public function landing()
   {
-    return view('apps');
+    $maqueta = json_decode(file_get_contents(storage_path() . "/app/public/maqueta.json"), true);
+
+    return view('landing')->with('maqueta',$maqueta);
   }
 
 
 
 
-  public function cmsIndex()
+  public function index()
   {
-    return view('cms.inicio');
+    return view('apps');
   }
 
 
