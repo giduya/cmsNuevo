@@ -1,4 +1,4 @@
-@extends('cms.menu')
+@extends('cms.menuCms')
 
 
 
@@ -348,12 +348,10 @@
 
           <div class="col-md-12">
 
-            @foreach($modulos as $modulo)
-              @if($modulo['columna'] == "Portada")
+            @foreach($maqueta['portada'] as $key => $modulo)
 
-                @include('ayudig.cms.etcetera.Modulo_foreach')
+              @include('etc.Modulo_foreach')
 
-              @endif
             @endforeach
 
           </div>
@@ -383,12 +381,10 @@
 
           <div class="col-md-12">
 
-            @foreach($modulos as $modulo)
-              @if($modulo['columna'] == "Header")
+            @foreach($maqueta['header'] as $key => $modulo)
 
-                @include('ayudig.cms.etcetera.Modulo_foreach')
+              @include('etc.Modulo_foreach')
 
-              @endif
             @endforeach
 
           </div>
@@ -951,7 +947,7 @@
 
 
 
-@foreach($maqueta['css'] as $key => $css)
+@foreach($csss as $key => $css)
 <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="css-{{ $key }}">
   <div class="mb-container">
     <div class="mb-middle">

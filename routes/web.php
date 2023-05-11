@@ -28,6 +28,16 @@ Route::group(['prefix' => 'cms'], function () {
 
   Route::get('/diseno/{pestana}', [App\Http\Controllers\DisenoController::class, 'diseno']);
 
+  Route::get('/modulo/{id}/{seccion}', [App\Http\Controllers\DisenoController::class, 'modulo']);
+
+  Route::get('/modulo/{id}/{seccion}/html', [App\Http\Controllers\DisenoController::class, 'moduloHtml']);
+
+
+
+  Route::get('/secciones', [App\Http\Controllers\SeccionController::class, 'secciones']);
+
+
+
   Route::group(['prefix' => 'config'], function () {
     Route::put('html', [App\Http\Controllers\DisenoController::class, 'html']);
 
@@ -41,6 +51,8 @@ Route::group(['prefix' => 'cms'], function () {
 
     Route::match(['get','post','patch','delete'],'js/{id?}', [App\Http\Controllers\DisenoController::class, 'js']);
   });
+
+
 
   Route::match(['post','get','patch','delete'],'/prensa/{noticiaId?}', [App\Http\Controllers\CmsController::class, 'prensa']);
 

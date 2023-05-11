@@ -27,11 +27,23 @@ class DisenoController extends Controller
   public function instalar()
   {
     ///////////////////////////////////////////////////////////////////////
-    $config = [
-                "tema" => 1,
+    $header  = [0 => ['nombre' => 'Menú Principal','tipo' => 'Menu','columna' => 'header','lista' => 0 ]];
+    $portada = [0 => ['nombre' => 'Menú Principal','tipo' => 'Menu','columna' => 'portada','lista' => 0 ]];
+
+    $menu   = [0 => ['menu' => 'Inicio', 'url' => "inicio",],
+               1 => ['menu' => 'Tu Municipio', 'url' => 'municipio'],
+               2 => ['menu' => 'Tu Gobierno', 'url' => 'gobierno'],
+               3 => ['menu' => 'Trámites y Servicios', 'url' => 'tramites'],
+               4 => ['menu' => 'Obligaciones', 'url' => 'obligaciones'],
+               5 => ['menu' => 'Contacto', 'url' => 'contacto'],];
+
+    $config = [ "tema" => 1,
                 "titulo" => "Municipio de ???",
                 "descripcion" => "Sitio web oficial del Municipio ??? con toda la información general, turística, servicios y más que necesitas de tu gobierno municipal.",
-            ];
+                "menu" => $menu,
+              ];
+
+    $secciones = [];
 
     $html = [
                  "bodyattributes" => "bodyattributes",
@@ -73,6 +85,9 @@ class DisenoController extends Controller
         "css" => [],
         "js" => [],
         "html" => $html,
+        "header" => $header,
+        "portada" => $portada,
+        "secciones" => $secciones,
        ];
 
     $res = Config::mongo('config',$config,"I");
@@ -97,12 +112,23 @@ class DisenoController extends Controller
 
 
 
+  public function modulo(Request $request)
+  {
+    $maqueta = Config::maqueta()[$request->route()->seccion][$request->route()->id];
+
+    $config = Config::config();
+
+    return view('cms.'.$maqueta['tipo'])->with('config',$config);
+  }
+
+
+
+
+
   public function diseno($pestana)
   {
     $maqueta = Config::maqueta();
 
-    $columnas_create = [];
-    $duplicar_en_columnas = [];
     $no_temas = 0;
     $partidos = [];
     $tipos_modulo = [];
@@ -113,8 +139,6 @@ class DisenoController extends Controller
                              ->with('csss',Css::csss())
                              ->with('jss',Js::jss())
                              ->with('modulos',[])
-                             ->with('columnas_create',$columnas_create)
-                             ->with('duplicar_en_columnas',$duplicar_en_columnas)
                              ->with('no_temas',1)
                              ->with('partidos',$partidos)
                              ->with('tipos_modulo',$tipos_modulo)
@@ -142,8 +166,6 @@ class DisenoController extends Controller
 
         return \Redirect::to('cms/diseno/head');
   }
-
-
 
 
 
@@ -341,6 +363,7 @@ class DisenoController extends Controller
 
     return \Redirect::to('cms/diseno/head');
   }
+
 
 
 

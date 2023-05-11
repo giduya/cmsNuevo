@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <title>{{ $config['titulo'] }}</title>
   @foreach($maqueta['metas'] as $meta)
@@ -12,7 +12,12 @@
 </head>
 <body {!! $maqueta['html']['bodyattributes'] !!}>
   {!! $maqueta['html']['bodyafter'] !!}
-  <h1>LLegamos</h2>
+
+  <ul>
+    @foreach($config['menu'] as $menu)
+      <li>{{ $menu['menu'] }}</li>
+    @endforeach
+  </ul>
 
   {!! $maqueta['html']['columnasafter'] !!}
   @foreach($maqueta['js'] as $js)
