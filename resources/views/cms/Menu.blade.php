@@ -22,7 +22,7 @@
   <ul class="panel-controls">
     <li>
       <span data-original-title="Editar Html del Menú (UL)" data-toggle="tooltip" data-placement="left" >
-        <a href="{{ url('cms/'.request()->route('id').'/'.request()->route('seccion').'/html') }}" tabindex=" {{ ++$tabindex }}" class="btn btn-primary btn-rounded btn-condesed btn-sm" >
+        <a href="{{ url('cms/modulo/'.request()->route('id').'/'.request()->route('seccion').'/html') }}" tabindex=" {{ ++$tabindex }}" class="btn btn-primary btn-rounded btn-condesed btn-sm" >
           <span class="far fa-code"></span> Editar HTML
         </a>
       </span>

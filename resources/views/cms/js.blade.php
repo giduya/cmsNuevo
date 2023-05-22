@@ -1,4 +1,4 @@
-@extends('cms.menu')
+@extends('cms.menuCms')
 
 
 

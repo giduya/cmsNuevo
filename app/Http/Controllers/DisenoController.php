@@ -27,8 +27,8 @@ class DisenoController extends Controller
   public function instalar()
   {
     ///////////////////////////////////////////////////////////////////////
-    $header  = [0 => ['nombre' => 'Menú Principal','tipo' => 'Menu','columna' => 'header','lista' => 0 ]];
-    $portada = [0 => ['nombre' => 'Menú Principal','tipo' => 'Menu','columna' => 'portada','lista' => 0 ]];
+    $header  = [0 => ['nombre' => 'Menú Principal','tipo' => 'Menu','columna' => 'header','lista' => 0, 'html' => ['modulohtmlbefore' => 'modulohtmlbefore','modulohtmlafter' => 'modulohtmlafter', 'ulattributes' => 'ulattributes', 'liattributes_link' => 'liattributes_link', 'lihtmlafter_link' => 'lihtmlafter_link', 'aattributes_link' => 'ahtmlafter_link', 'ahtmlafter_link' => 'ahtmlafter_link', 'ahtmlbefore_link' => 'ahtmlbefore_link', 'lihtmlbefore_link' => 'lihtmlbefore_link', 'liattributesall_drop' => 'liattributesall_drop','ahtmlbefore_link' =>'ahtmlbefore_link','lihtmlbefore_link' => 'lihtmlbefore_link','liattributes_drop' => 'liattributes_drop','lihtmlafter_drop' => 'lihtmlafter_drop','aattributesall_drop' => 'aattributesall_drop','ahtmlafter_drop' => 'ahtmlafter_drop','ahtmlbefore_drop' => 'ahtmlbefore_drop', 'subulhtmlbefore' => 'subulhtmlbefore','subulattributesall' => 'subulattributesall','subliattributesall' => 'subliattributesall','sublihtmlafter' => 'sublihtmlafter','subaattributesall' => 'subaattributesall'] ]];
+    $portada = [0 => ['nombre' => 'Menú Principal','tipo' => 'Menu','columna' => 'portada','lista' => 0, 'html' => ['modulohtmlbefore' => 'modulohtmlbefore','modulohtmlafter' => 'modulohtmlafter', 'ulattributes' => 'ulattributes', 'liattributes_link' => 'liattributes_link', 'lihtmlafter_link' => 'lihtmlafter_link', 'aattributes_link' => 'ahtmlafter_link', 'ahtmlafter_link' => 'ahtmlafter_link', 'ahtmlbefore_link' => 'ahtmlbefore_link', 'lihtmlbefore_link' => 'lihtmlbefore_link', 'liattributesall_drop' => 'liattributesall_drop','ahtmlbefore_link' =>'ahtmlbefore_link','lihtmlbefore_link' => 'lihtmlbefore_link','liattributes_drop' => 'liattributes_drop','lihtmlafter_drop' => 'lihtmlafter_drop','aattributesall_drop' => 'aattributesall_drop','ahtmlafter_drop' => 'ahtmlafter_drop','ahtmlbefore_drop' => 'ahtmlbefore_drop','subulhtmlbefore' => 'subulhtmlbefore','subulattributesall' => 'subulattributesall','subliattributesall' => 'subliattributesall','sublihtmlafter' => 'sublihtmlafter','subaattributesall' => 'subaattributesall'] ]];
 
     $menu   = [0 => ['menu' => 'Inicio', 'url' => "inicio",],
                1 => ['menu' => 'Tu Municipio', 'url' => 'municipio'],
@@ -118,7 +118,15 @@ class DisenoController extends Controller
 
     $config = Config::config();
 
-    return view('cms.'.$maqueta['tipo'])->with('config',$config);
+    if($request->route()->html == "html")
+    {
+        return view('cms.'.$maqueta['tipo'].'_html')->with('html',$maqueta['html']);
+    }
+    else
+    {
+        return view('cms.'.$maqueta['tipo'])->with('config',$config);
+    }
+
   }
 
 
