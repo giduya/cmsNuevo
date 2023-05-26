@@ -214,7 +214,7 @@
       <div class="col-md-6 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon">&lt;ul (submenú)</span>
-          <input id="subulattributesall" type="text" maxlength="255" class="validate[maxSize[255]] form-control" placeholder="Agrega tus atributos" name="subulattributes" value="" />
+          <input id="subulattributesall" type="text" maxlength="255" class="validate[maxSize[255]] form-control" placeholder="Agrega tus atributos" name="subulattributes" value="{{ $html['subulattributes'] }}" />
           <span class="input-group-addon">&gt;</span>
         </div>
       </div>
@@ -226,7 +226,7 @@
       <div class="col-md-5 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon">&lt;li (submenú)</span>
-          <input id="subliattributesall" type="text" maxlength="255" class="validate[maxSize[255]] form-control" placeholder="Agrega tus atributos" name="subliattributes" value="" />
+          <input id="subliattributesall" type="text" maxlength="255" class="validate[maxSize[255]] form-control" placeholder="Agrega tus atributos" name="subliattributes" value="{{ $html['subliattributes'] }}" />
           <span class="input-group-addon">&gt;</span>
         </div>
       </div>
@@ -236,7 +236,7 @@
     <div class="form-group">
       <div class="col-md-6 col-xs-12"></div>
       <div class="col-md-4 col-xs-12">
-        <textarea rows="4" name="sublihtmlafter" placeholder="Agrega tu código html" class="form-control"></textarea>
+        <textarea rows="4" name="sublihtmlafter" placeholder="Agrega tu código html" class="form-control">{{ $html['sublihtmlafter'] }}</textarea>
       </div>
     </div>
 
@@ -246,7 +246,7 @@
       <div class="col-md-4 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon">&lt;a (submenú)</span>
-          <input id="subaattributesall" type="text" maxlength="255" class="validate[maxSize[255]] form-control" placeholder="Agrega tus atributos" name="subaattributes" value="" />
+          <input id="subaattributesall" type="text" maxlength="255" class="validate[maxSize[255]] form-control" placeholder="Agrega tus atributos" name="subaattributes" value="{{ $html['subaattributes'] }}" />
           <span class="input-group-addon">&gt;</span>
         </div>
       </div>
@@ -256,7 +256,7 @@
     <div class="form-group">
       <div class="col-md-7 col-xs-12"></div>
       <div class="col-md-3 col-xs-12">
-        <textarea rows="4" name="subahtmlafter" placeholder="Agrega tu código html" class="form-control"></textarea>
+        <textarea rows="4" name="subahtmlafter" placeholder="Agrega tu código html" class="form-control">{{ $html['subahtmlafter'] }}</textarea>
       </div>
     </div>
 
@@ -274,7 +274,7 @@
     <div class="form-group">
       <div class="col-md-7 col-xs-12"></div>
       <div class="col-md-3 col-xs-12">
-        <textarea rows="4" name="subahtmlbefore" placeholder="Agrega tu código html" class="form-control"></textarea>
+        <textarea rows="4" name="subahtmlbefore" placeholder="Agrega tu código html" class="form-control">{{ $html['subahtmlbefore'] }}</textarea>
       </div>
     </div>
 
@@ -292,7 +292,7 @@
     <div class="form-group">
       <div class="col-md-6 col-xs-12"></div>
       <div class="col-md-4 col-xs-12">
-        <textarea rows="4" name="sublihtmlbefore" placeholder="Agrega tu código html" class="form-control"></textarea>
+        <textarea rows="4" name="sublihtmlbefore" placeholder="Agrega tu código html" class="form-control">{{ $html['sublihtmlbefore'] }}</textarea>
       </div>
     </div>
 
@@ -320,7 +320,7 @@
     <div class="form-group">
       <div class="col-md-4 col-xs-12"></div>
       <div class="col-md-6 col-xs-12">
-        <textarea rows="4" name="lihtmlbefore_drop" placeholder="Agrega tu código html" class="form-control"></textarea>
+        <textarea rows="4" name="lihtmlbefore_drop" placeholder="Agrega tu código html" class="form-control">{{ $html['lihtmlbefore_drop'] }}</textarea>
       </div>
     </div>
 
