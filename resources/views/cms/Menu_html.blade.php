@@ -138,7 +138,7 @@
       <div class="col-md-7 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon">&lt;LI (con submenu)</span>
-          <input id="liattributesall_drop" type="text" maxlength="255" class="validate[maxSize[255]] form-control" placeholder="Agrega tus atributos" name="liattributes_drop" value="{{ $html['liattributesall_drop'] }}" />
+          <input id="liattributesall_drop" type="text" maxlength="255" class="validate[maxSize[255]] form-control" placeholder="Agrega tus atributos" name="liattributes_drop" value="{{ $html['liattributes_drop'] }}" />
           <span class="input-group-addon">&gt;</span>
         </div>
       </div>
@@ -148,7 +148,7 @@
     <div class="form-group">
       <div class="col-md-4 col-xs-12"></div>
       <div class="col-md-6 col-xs-12">
-        <textarea rows="4" name="lihtmlafter_drop" placeholder="Agrega tu código html" class="form-control">{{ $html['ahtmlbefore_link'] }}</textarea>
+        <textarea rows="4" name="lihtmlafter_drop" placeholder="Agrega tu código html" class="form-control">{{ $html['lihtmlafter_drop'] }}</textarea>
       </div>
     </div>
 
@@ -158,7 +158,7 @@
       <div class="col-md-6 col-xs-12">
         <div class="input-group">
           <span class="input-group-addon">&lt;A (con submenú)</span>
-          <input id="aattributesall_drop" type="text" maxlength="255" class="validate[maxSize[255]] form-control" placeholder="Agrega tus atributos" name="aattributes_drop" value="{{ $html['aattributesall_drop'] }}" />
+          <input id="aattributesall_drop" type="text" maxlength="255" class="validate[maxSize[255]] form-control" placeholder="Agrega tus atributos" name="aattributes_drop" value="{{ $html['aattributes_drop'] }}" />
           <span class="input-group-addon">&gt;</span>
         </div>
       </div>
@@ -360,6 +360,6 @@
 
 
 @section('panel-footer')
-  <button class="btn btn-info pull-right" type="submit" form="form">Siguiente</button>
-  <a href="{{ url('cms/modulo/') }}" tabindex="{{ ++$tabindex }}" class="btn btn-default pull-left">Anterior</a>
+  <a href="{{ url('cms/modulo/'.request()->route('id')) }}" tabindex="{{ ++$tabindex }}" class="btn btn-default">Anterior</a>
+  <button class="btn btn-info" type="submit" form="form">Siguiente</button>
 @endsection

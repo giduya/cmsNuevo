@@ -98,7 +98,7 @@
 
                 @yield('panel-body')
 
-                <div class="panel-footer">
+                <div class="panel-footer text-right">
                   @yield('panel-footer')
                 </div><!--footer-->
               </div><!--panel-default-->
