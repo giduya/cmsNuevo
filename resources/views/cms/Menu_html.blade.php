@@ -23,7 +23,7 @@
 
   <p>&nbsp;</p>
 
-  <form id="form" name="validate" class="form-horizontal" action="{{ url('cms/modulo/html') }}" method="POST" autocomplete="off">
+  <form id="form" name="validate" class="form-horizontal" action="{{ url('cms/modulo/'.request()->route('id').'/'.request()->route('seccion').'/html') }}" method="POST" autocomplete="off">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="_method" value="PUT">
 

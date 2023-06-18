@@ -28,7 +28,7 @@ Route::group(['prefix' => 'cms'], function () {
 
   Route::get('/diseno/{pestana}', [App\Http\Controllers\DisenoController::class, 'diseno']);
 
-  Route::get('/modulo/{id}/{seccion}/{html?}', [App\Http\Controllers\DisenoController::class, 'modulo']);
+  Route::match(['put','get'],'/modulo/{id}/{seccion}/{html?}', [App\Http\Controllers\DisenoController::class, 'modulo']);
 
 
 

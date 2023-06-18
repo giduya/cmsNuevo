@@ -48,7 +48,7 @@ class DisenoController extends Controller
     $secciones = [];
 
     $html = [
-                 "bodyattributes" => "bodyattributes",
+                 "bodyattributes" => "",
                  "bodyafter" => "bodyafter",
                  "columnasafter" => "columnasafter",
                  "columnasbefore" => "columnasbefore",
@@ -80,12 +80,50 @@ class DisenoController extends Controller
                  "izquierdaafters" => "izquierdaafters",
                 ];
 
+    $metas = ['charset="utf-8"','name="viewport" content="width=device-width, initial-scale=1"'];
+
+    $links = [];
+
+    $css = [
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'responsive',          'archivo' => 'responsive.css',           'lista' => '2'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'color',               'archivo' => 'color.css',                'lista' => '3'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'all',                 'archivo' => 'all.css',                  'lista' => '4'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'owl_carousel_min',    'archivo' => 'owl_carousel_min.css',     'lista' => '5'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'bootstrap_min',       'archivo' => 'bootstrap_min.css',        'lista' => '6'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'prettyPhoto',         'archivo' => 'prettyPhoto.css',          'lista' => '7'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'slick',               'archivo' => 'slick.css',                'lista' => '8'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'rev_slider_settings', 'archivo' => 'rev_slider_settings.css',  'lista' => '9'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'rev_slider_layers',   'archivo' => 'rev_slider_layers.css',    'lista' => '10'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'navigation',          'archivo' => 'navigation.css',           'lista' => '11'],
+    ];
+
+    $js = [
+        ['atributos' => null, 'nombre' => 'jquery_min',                             'archivo' => 'jquery_min.js',                           'lista' => '1'],
+        ['atributos' => null, 'nombre' => 'bootstrap_min',                          'archivo' => 'bootstrap_min.js',                        'lista' => '2'],
+        ['atributos' => null, 'nombre' => 'owl_carousel_min',                       'archivo' => 'owl_carousel_min.js',                     'lista' => '3'],
+        ['atributos' => null, 'nombre' => 'jquery_prettyPhoto',                     'archivo' => 'jquery_prettyPhoto.js',                   'lista' => '4'],
+        ['atributos' => null, 'nombre' => 'slick_min',                              'archivo' => 'slick_min.js',                            'lista' => '5'],
+        ['atributos' => null, 'nombre' => 'custom',                                 'archivo' => 'custom.js',                               'lista' => '6'],
+        ['atributos' => null, 'nombre' => 'jquery_themepunch_tools_min',            'archivo' => 'jquery_themepunch_tools_min.js',          'lista' => '7'],
+        ['atributos' => null, 'nombre' => 'jquery_themepunch_revolution_min',       'archivo' => 'jquery_themepunch_revolution_min.js',     'lista' => '8'],
+        ['atributos' => null, 'nombre' => 'rev_slider',                             'archivo' => 'rev_slider.js',                           'lista' => '9'],
+        ['atributos' => null, 'nombre' => 'revolution_extension_actions_min',       'archivo' => 'revolution_extension_actions_min.js',     'lista' => '10'],
+        ['atributos' => null, 'nombre' => 'revolution_extension_carousel_min',      'archivo' => 'revolution_extension_carousel_min.js',    'lista' => '11'],
+        ['atributos' => null, 'nombre' => 'revolution_extension_kenburn_min',       'archivo' => 'revolution_extension_kenburn_min.js',     'lista' => '12'],
+        ['atributos' => null, 'nombre' => 'revolution_extension_layeranimation',    'archivo' => 'revolution_extension_layeranimation.js',  'lista' => '13'],
+        ['atributos' => null, 'nombre' => 'revolution_extension_migration_min',     'archivo' => 'revolution_extension_migration_min.js',   'lista' => '14'],
+        ['atributos' => null, 'nombre' => 'revolution_extension_navigation_min',    'archivo' => 'revolution_extension_navigation_min.js',  'lista' => '15'],
+        ['atributos' => null, 'nombre' => 'revolution_extension_parallax_min',      'archivo' => 'revolution_extension_parallax_min.js',    'lista' => '16'],
+        ['atributos' => null, 'nombre' => 'revolution_extension_slideanims_min',    'archivo' => 'revolution_extension_slideanims_min.js',  'lista' => '17'],
+        ['atributos' => null, 'nombre' => 'revolution_extension_video_min',         'archivo' => 'revolution_extension_video_min.js',       'lista' => '18'],
+    ];
+
     $maqueta = [
         "tema" => 1,
-        "metas" => [],
-        "links" => [],
-        "css" => [],
-        "js" => [],
+        "metas" => $metas,
+        "links" => $links,
+        "css" => $css,
+        "js" => $js,
         "html" => $html,
         "header" => $header,
         "portada" => $portada,
@@ -118,11 +156,56 @@ class DisenoController extends Controller
   {
     $maqueta = Config::maqueta()[$request->route()->seccion][$request->route()->id];
 
+
     $config = Config::config();
 
     if($request->route()->html == "html")
     {
-        return view('cms.'.$maqueta['tipo'].'_html')->with('html',$maqueta['html']);
+        if($request->method() == "PUT")
+        {
+            $html = ["modulohtmlbefore" => $request->input('modulohtmlbefore'),
+                      "modulohtmlafter" => $request->input('modulohtmlafter'),
+                      "ulattributes" => $request->input('ulattributes'),
+                      "liattributes_link" => $request->input('liattributes_link'),
+                      "lihtmlafter_link" => $request->input('lihtmlafter_link'),
+                      "aattributes_link" => $request->input('aattributes_link'),
+                      "ahtmlafter_link" => $request->input('ahtmlafter_link'),
+                      "lihtmlbefore_link" => $request->input('lihtmlbefore_link'),
+                      "ahtmlbefore_link" => $request->input('ahtmlbefore_link'),
+                      "liattributes_drop" => $request->input('liattributes_drop'),
+                      "lihtmlafter_drop" => $request->input('lihtmlafter_drop'),
+                      "aattributes_drop" => $request->input('aattributes_drop'),
+                      "ahtmlafter_drop" => $request->input('ahtmlafter_drop'),
+                      "ahtmlbefore_drop" => $request->input('ahtmlbefore_drop'),
+                      "subulhtmlbefore" => $request->input('subulhtmlbefore'),
+                      "subulattributes" => $request->input('subulattributes'),
+                      "sublihtmlafter" => $request->input('sublihtmlafter'),
+                      "subaattributesall" => $request->input('subaattributesall'),
+                      "subliattributes" => $request->input('subliattributes'),
+                      "lihtmlbefore_drop" => $request->input('lihtmlbefore_drop'),
+                      "subaattributes" => $request->input('subaattributes'),
+                      "subahtmlafter" => $request->input('subahtmlafter'),
+                      "subahtmlbefore" => $request->input('subahtmlbefore'),
+                      "sublihtmlbefore" => $request->input('sublihtmlbefore'),
+          ];
+
+          $maqueta['html'] = $html;
+
+          $r = Config::mongo('maqueta',['header.0' => $maqueta],"U");
+
+          if(isset($r['modifiedCount']))
+          {
+              \Session::flash('success', 'El código HTML se actualizó correctamente y descripción se actualizaron correctamente.');
+
+              $this->json();
+          }
+
+          return \Redirect::to('cms/modulo/'.$request->route()->id.'/'.$request->route()->seccion.'/html');
+        }
+        else
+        {
+            return view('cms.'.$maqueta['tipo'].'_html')->with('html',$maqueta['html']);
+        }
     }
     else
     {
