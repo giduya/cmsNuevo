@@ -13,11 +13,26 @@
 <body {!! $maqueta['html']['bodyattributes'] !!}>
   {!! $maqueta['html']['bodyafter'] !!}
 
-  <ul>
-    @foreach($config['menu'] as $menu)
-      <li>{{ $menu['menu'] }}</li>
+
+
+
+
+@if(request()->route('seccion'))
+
+
+
+@else
+
+    @foreach($maqueta['header'] as $modulo)
+
+        @include('landing.'.$modulo['tipo'])
+
     @endforeach
-  </ul>
+
+@endif
+
+
+
 
   {!! $maqueta['html']['columnasafter'] !!}
   @foreach($maqueta['js'] as $js)

@@ -116,3 +116,8 @@
   </ol>
 </div>
 @endsection
+
+
+@section('panel-footer')
+  <a href="{{ url('cms/diseno/Portada') }}" tabindex="{{ ++$tabindex }}" class="btn btn-default">Anterior</a>
+@endsection

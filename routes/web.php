@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/instalar', [App\Http\Controllers\DisenoController::class, 'instalar']);
-
-Route::get('/', [App\Http\Controllers\LandingController::class, 'landing']);
-
 Auth::routes();
 
 Route::get('/apps', [App\Http\Controllers\WebController::class, 'index'])->name('home');
@@ -62,3 +58,7 @@ Route::group(['prefix' => 'cms'], function () {
 
 
 Route::post('/form', [App\Http\Controllers\HomeController::class, 'form']);
+
+Route::get('/instalar', [App\Http\Controllers\DisenoController::class, 'instalar']);
+
+Route::get('/{seccion?}', [App\Http\Controllers\LandingController::class, 'landing']);

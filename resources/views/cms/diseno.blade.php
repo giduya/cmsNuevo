@@ -336,13 +336,11 @@
         <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
         <div class="tab-pane @if($pestana == "Portada") active @endif" id="tab-third">
           <div class="col-md-12">
-            @if($config['tema'] == 0)
               <div class="pull-right">
                 <a href="#" class="btn btn-default" data-toggle="modal" data-target="#modal_Portada"><span class="fas fa-plus"></span>
                   AGREGAR MÓDULO EN PORTADA
                 </a>
               </div>
-            @endif
             <h2>Editar Header del Index (Portada)</h2>
           </div>
 
@@ -369,13 +367,11 @@
         <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
         <div class="tab-pane @if($pestana == "Header") active @endif" id="tab-fourth">
           <div class="col-md-12">
-            @if($config['tema'] == 0)
               <div class="pull-right">
                 <a href="#" class="btn btn-default" data-toggle="modal" data-target="#modal_Header"><span class="fa fa-plus"></span>
                   AGREGAR MÓDULO EN HEADER
                 </a>
               </div>
-            @endif
             <h2>Editar Header de toda la página</h2>
           </div>
 

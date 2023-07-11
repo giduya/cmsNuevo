@@ -360,6 +360,6 @@
 
 
 @section('panel-footer')
-  <a href="{{ url('cms/modulo/'.request()->route('id')) }}" tabindex="{{ ++$tabindex }}" class="btn btn-default">Anterior</a>
+  <a href="{{ url('cms/modulo/'.request()->route('id').'/'.request()->route('seccion')) }}" tabindex="{{ ++$tabindex }}" class="btn btn-default">Anterior</a>
   <button class="btn btn-info" type="submit" form="form">Siguiente</button>
 @endsection

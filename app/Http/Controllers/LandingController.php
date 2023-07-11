@@ -6,7 +6,7 @@ use App\Models\Config;
 class LandingController extends Controller
 {
 
-  public function landing()
+  public function landing(Request $request)
   {
     $maqueta = json_decode(file_get_contents(storage_path() . "/app/public/maqueta.json"), true);
 
