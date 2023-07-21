@@ -7,7 +7,7 @@
   @endforeach
 
   @foreach($maqueta['css'] as $css)
-    <link href="contenido/css/{{ $css['archivo'] }}" href="{!! $css['atributos'] !!}">
+    <link href="contenido/css/{{ $css['archivo'] }}" {!! $css['atributos'] !!}>
   @endforeach
 </head>
 <body {!! $maqueta['html']['bodyattributes'] !!}>
@@ -36,7 +36,7 @@
 
   {!! $maqueta['html']['columnasafter'] !!}
   @foreach($maqueta['js'] as $js)
-    <link href="contenido/js/{{ $js['archivo'] }}" href="{!! $js['atributos'] !!}">
+    <script {!! $js['atributos'] !!} src="contenido/js/{{ $js['archivo'] }}"></script>
   @endforeach
 </body>
 </html>

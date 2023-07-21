@@ -80,11 +80,12 @@ class DisenoController extends Controller
                  "izquierdaafters" => "izquierdaafters",
                 ];
 
-    $metas = ['charset="utf-8"','name="viewport" content="width=device-width, initial-scale=1"'];
+    $metas = ['charset="utf-8"','http-equiv="X-UA-Compatible" content="IE=edge"','name="viewport" content="width=device-width, initial-scale=1"'];
 
     $links = [];
 
     $css = [
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'custom',          'archivo' => 'custom.css',           'lista' => '1'],
         ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'responsive',          'archivo' => 'responsive.css',           'lista' => '2'],
         ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'color',               'archivo' => 'color.css',                'lista' => '3'],
         ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'all',                 'archivo' => 'all.css',                  'lista' => '4'],

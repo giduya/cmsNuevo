@@ -77,7 +77,7 @@ class Config extends Model
 
 
       $bd = ["dataSource" => "Cluster0",
-             "database"   => "bd_",];
+             "database"   => "bd_tuxpan",];
 
       $bd = array_merge($bd,$q);
 
