@@ -39,13 +39,17 @@ class DisenoController extends Controller
                4 => ['menu' => 'Obligaciones', 'url' => 'obligaciones'],
                5 => ['menu' => 'Contacto', 'url' => 'contacto'],];
 
+    $secciones = [0 => ['titulo' => 'Inicio',        'slug' => "inicio",         'plantilla' => 1, 'borrame' => false],
+                  1 => ['titulo' => 'Transparencia', 'slug' => 'transparencia',  'plantilla' => 1, 'borrame' => false],
+                  2 => ['titulo' => 'Contacto',      'slug' => 'contacto',       'plantilla' => 1, 'borrame' => false],];
+
     $config = [ "tema" => 1,
                 "titulo" => "Municipio de ???",
                 "descripcion" => "Sitio web oficial del Municipio ??? con toda la información general, turística, servicios y más que necesitas de tu gobierno municipal.",
+                'dominio' => "api.luvianos.com",
                 "menu" => $menu,
+                "secciones" => $secciones,
               ];
-
-    $secciones = [];
 
     $html = [
                  "bodyattributes" => "",
@@ -157,7 +161,6 @@ class DisenoController extends Controller
   {
     $maqueta = Config::maqueta()[$request->route()->seccion][$request->route()->id];
 
-
     $config = Config::config();
 
     if($request->route()->html == "html")
@@ -192,7 +195,7 @@ class DisenoController extends Controller
 
           $maqueta['html'] = $html;
 
-          $r = Config::mongo('maqueta',['header.0' => $maqueta],"U");
+          $r = Config::mongo('maqueta',[$request->route()->seccion.'.'.$request->route()->id => $maqueta],"U");
 
           if(isset($r['modifiedCount']))
           {

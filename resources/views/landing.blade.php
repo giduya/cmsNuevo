@@ -19,11 +19,15 @@
 
 @if(request()->route('seccion'))
 
+    @foreach($maqueta['header'] as $modulo)
 
+        @include('landing.'.$modulo['tipo'])
+
+    @endforeach
 
 @else
 
-    @foreach($maqueta['header'] as $modulo)
+    @foreach($maqueta['portada'] as $modulo)
 
         @include('landing.'.$modulo['tipo'])
 

@@ -1,4 +1,4 @@
-@extends('ayudig.cms.menu')
+@extends('cms.menuCms')
 
 
 
@@ -35,27 +35,27 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($secciones->secciones as $seccion)
+        @foreach($config['secciones'] as $seccion)
         <tr>
           <td class="text-left">
-            <strong>{{ $seccion->titulo }}</strong>
+            <strong>{{ $seccion['titulo'] }}</strong>
           </td>
           <td>
-            <a href="http://{{ $dominio }}/{{ $seccion->slug }}" target="_blank">www.{{ $dominio }}/{{ $seccion->slug }}</a>
+            <a href="http://{{ $config['dominio'] }}/{{ $seccion['slug'] }}" target="_blank">www.{{ $config['dominio'] }}/{{ $seccion['slug'] }}</a>
           </td>
           <td class="text-center">
-            <strong>{{ $seccion->config['plantilla'] }}</strong>
+            <strong>{{ $seccion['plantilla'] }}</strong>
           </td>
           <td class="text-center" style="width:150px;">
             <ul class="panel-controls text-center">
               <li>
-                <a tabindex="4" data-toggle="tooltip" data-placement="top" data-original-title="Editar" class="control-warning" href="{{ url('cms/Seccion/'.$seccion->id.'/edit') }}">
+                <a tabindex="4" data-toggle="tooltip" data-placement="top" data-original-title="Editar" class="control-warning" href="{{ url('cms/Seccion/'.$seccion['slug'].'/edit') }}">
                   <span class="far fa-pencil-alt"></span>
                 </a>
               </li>
-              @if($seccion->config['borrame'] == 1)
+              @if($seccion['borrame'] == 1)
               <li>
-                <a tabindex="{{ ++$tabindex }}" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" class="control-danger mb-control" data-box="#mb-{{ $seccion->id }}">
+                <a tabindex="{{ ++$tabindex }}" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" class="control-danger mb-control" data-box="#mb-{{ $seccion['slug'] }}">
                   <span class="fa fa-times"></span>
                 </a>
               </li>
@@ -72,8 +72,8 @@
 
 
 
-@foreach($secciones->secciones as $seccion)
-  <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-{{ $seccion->id }}">
+@foreach($config['secciones'] as $seccion)
+  <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mb-{{ $seccion['slug'] }}">
     <div class="mb-container">
       <div class="mb-middle">
         <div class="mb-title"><span class="fa fa fa-times"></span>¿ Borrar <strong>Sección</strong> ?</div>
@@ -82,7 +82,7 @@
         </div>
         <div class="mb-footer">
           <div class="pull-right">
-            <form action="{{ url('cms/Seccion/'.$seccion->id) }}" method="POST">
+            <form action="{{ url('cms/Seccion/'.$seccion['slug']) }}" method="POST">
               <input name="_method" type="hidden" value="DELETE">
               <input name="_token"  type="hidden" value="{{ csrf_token() }}">
               <button class="btn btn-success btn-lg" type="submit">Sí</button>
@@ -141,8 +141,8 @@
             <label class="col-md-3 col-xs-12 control-label">Plantilla</label>
             <div class="col-md-8 col-xs-12">
               <select class="form-control select" name="plantilla">
-                <option value="{{ $secciones->precargadas['5']['plantilla'] }}">Página en Blanco</option>
-                <option value="{{ $secciones->precargadas['6']['plantilla'] }}">Página con menú lateral</option>
+                <option value="Pagina">Página en Blanco</option>
+                <option value="Micrositio">Página con menú lateral</option>
               </select>
             </div>
           </div>

@@ -26,7 +26,9 @@ class SeccionController extends Controller
 
   public function secciones(Request $request)
   {
-    return view('cms.secciones');
+    $config = Config::config();
+
+    return view('cms.secciones')->with('config',$config);
   }
 
 
