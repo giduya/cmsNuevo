@@ -115,6 +115,65 @@
     @endforeach
   </ol>
 </div>
+
+
+
+
+
+<div class="modal animated fade" id="create_menu" tabindex="-1" role="dialog" aria-labelledby="smallModalHead" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Cerrar</span>
+          </button>
+          <h4 class="modal-title" id="smallModalHead">
+            <span class="far fa-sitemap"></span>
+            Crear <strong>Menú</strong>
+          </h4>
+        </div>
+
+        <form name="validate" action="{{ url('cms/Menu') }}" method="POST" autocomplete="off">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="modulo_id" value="{{ $modulo['id'] }}">
+
+          <div class="modal-body form-horizontal">
+            <p>Los campos marcados con <code>*</code> son obligatorios.</p>
+          </div>
+
+          <div class="modal-body form-horizontal form-group-separated">
+            <div class="form-group">
+              <label for="menu" class="col-md-3 control-label">Menú:<code>*</code></label>
+              <div class="col-md-8 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="far fa-font"></span></span>
+                  <input id="menu" class="validate[required,maxSize[31]] form-control" maxlength="31" type="text" name="menu"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="lista" class="col-md-3 control-label">No de Lista:<code>*</code></label>
+              <div class="col-md-9 col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="far fa-sort-numeric-down"></span></span>
+                  <input id="lista" type="number" class="validate[custom[integer],min[1]] form-control input-small" name="lista" value="1" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-info">Enviar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
 @endsection
 
 
