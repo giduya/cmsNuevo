@@ -27,17 +27,17 @@ class DisenoController extends Controller
   public function instalar()
   {
     ///////////////////////////////////////////////////////////////////////
-    $menu_html = ['modulohtmlbefore' => 'modulohtmlbefore','modulohtmlafter' => 'modulohtmlafter', 'ulattributes' => 'ulattributes', 'liattributes_link' => 'liattributes_link', 'lihtmlafter_link' => 'lihtmlafter_link', 'aattributes_link' => 'aattributes_link', 'ahtmlafter_link' => 'ahtmlafter_link', 'lihtmlbefore_link' => 'lihtmlbefore_link', 'ahtmlbefore_link' =>'ahtmlbefore_link','lihtmlbefore_link' => 'lihtmlbefore_link','liattributes_drop' => 'liattributes_drop','lihtmlafter_drop' => 'lihtmlafter_drop','aattributes_drop' => 'aattributes_drop','ahtmlafter_drop' => 'ahtmlafter_drop','ahtmlbefore_drop' => 'ahtmlbefore_drop','subulhtmlbefore' => 'subulhtmlbefore','subulattributes' => 'subulattributes','sublihtmlafter' => 'sublihtmlafter','subliattributes' => 'subliattributes','lihtmlbefore_drop' => 'lihtmlbefore_drop','subaattributes' => 'subaattributes','subahtmlafter' => 'subahtmlafter','subahtmlbefore' => 'subahtmlbefore','sublihtmlbefore' => 'sublihtmlbefore'];
+    $menu_html = ['modulohtmlbefore' => 'modulohtmlbefore','modulohtmlafter' => 'modulohtmlafter', 'ulattributes' => 'ulattributes', 'liattributes_link' => '', 'lihtmlafter_link' => '', 'aattributes_link' => '', 'ahtmlafter_link' => 'ahtmlafter_link', 'lihtmlbefore_link' => 'lihtmlbefore_link', 'ahtmlbefore_link' =>'ahtmlbefore_link','lihtmlbefore_link' => 'lihtmlbefore_link','liattributes_drop' => 'liattributes_drop','lihtmlafter_drop' => 'lihtmlafter_drop','aattributes_drop' => 'aattributes_drop','ahtmlafter_drop' => 'ahtmlafter_drop','ahtmlbefore_drop' => 'ahtmlbefore_drop','subulhtmlbefore' => 'subulhtmlbefore','subulattributes' => 'subulattributes','sublihtmlafter' => 'sublihtmlafter','subliattributes' => 'subliattributes','lihtmlbefore_drop' => 'lihtmlbefore_drop','subaattributes' => 'subaattributes','subahtmlafter' => 'subahtmlafter','subahtmlbefore' => 'subahtmlbefore','sublihtmlbefore' => 'sublihtmlbefore'];
 
     $header  = [0 => ['nombre' => 'Menú Principal','tipo' => 'Menu','columna' => 'header', 'lista' => 0, 'html' => $menu_html]];
     $portada = [0 => ['nombre' => 'Menú Principal','tipo' => 'Menu','columna' => 'portada','lista' => 0, 'html' => ['modulohtmlbefore' => 'modulohtmlbefore','modulohtmlafter' => 'modulohtmlafter', 'ulattributes' => 'ulattributes', 'liattributes_link' => 'liattributes_link', 'lihtmlafter_link' => 'lihtmlafter_link', 'aattributes_link' => 'aattributes_link', 'ahtmlafter_link' => 'ahtmlafter_link', 'lihtmlbefore_link' => 'lihtmlbefore_link', 'ahtmlbefore_link' =>'ahtmlbefore_link','lihtmlbefore_link' => 'lihtmlbefore_link','liattributes_drop' => 'liattributes_drop','lihtmlafter_drop' => 'lihtmlafter_drop','aattributes_drop' => 'aattributes_drop','ahtmlafter_drop' => 'ahtmlafter_drop','ahtmlbefore_drop' => 'ahtmlbefore_drop','subulhtmlbefore' => 'subulhtmlbefore','subulattributes' => 'subulattributes','sublihtmlafter' => 'sublihtmlafter','subliattributes' => 'subliattributes','lihtmlbefore_drop' => 'lihtmlbefore_drop','subaattributes' => 'subaattributes','subahtmlafter' => 'subahtmlafter','subahtmlbefore' => 'subahtmlbefore','sublihtmlbefore' => 'sublihtmlbefore'] ]];
 
-    $menu   = [0 => ['menu' => 'Inicio', 'url' => "inicio",],
-               1 => ['menu' => 'Tu Municipio', 'url' => 'municipio'],
-               2 => ['menu' => 'Tu Gobierno', 'url' => 'gobierno'],
-               3 => ['menu' => 'Trámites y Servicios', 'url' => 'tramites'],
-               4 => ['menu' => 'Obligaciones', 'url' => 'obligaciones'],
-               5 => ['menu' => 'Contacto', 'url' => 'contacto'],];
+    $menu   = [0 => ['menu' => 'Inicio',               'url' => "inicio",       'lista' => 1],
+               1 => ['menu' => 'Tu Municipio',         'url' => 'municipio',    'lista' => 3],
+               2 => ['menu' => 'Tu Gobierno',          'url' => 'gobierno',     'lista' => 5],
+               3 => ['menu' => 'Trámites y Servicios', 'url' => 'tramites',     'lista' => 7],
+               4 => ['menu' => 'Obligaciones',         'url' => 'obligaciones', 'lista' => 9],
+               5 => ['menu' => 'Contacto',             'url' => 'contacto',     'lista' => 11],];
 
     $secciones = [0 => ['titulo' => 'Inicio',        'slug' => "inicio",         'plantilla' => 1, 'borrame' => false],
                   1 => ['titulo' => 'Transparencia', 'slug' => 'transparencia',  'plantilla' => 1, 'borrame' => false],
@@ -53,8 +53,10 @@ class DisenoController extends Controller
 
     $html = [
                  "bodyattributes" => "",
-                 "bodyafter" => "bodyafter",
-                 "columnasafter" => "columnasafter",
+                 "bodyafter" => '<!--Wrapper Start-->
+                                 <div class="wrapper">',
+                 "columnasafter" => "</div>
+                                     <!--Wrapper End-->",
                  "columnasbefore" => "columnasbefore",
 
                  "izquierdabeforeg" => "izquierdabeforeg",
@@ -151,6 +153,26 @@ class DisenoController extends Controller
     $maqueta = Config::maqueta();
 
     $r = \Storage::disk('public')->put('maqueta.json', json_encode($maqueta));
+  }
+
+
+
+
+
+  public function menu(Request $request)
+  {
+    $menu = array('menu' => $request->input('menu'), 'slug' => '' ,'lista' => $request->input('lista'));
+
+    $menus = Config::config()['menu'];
+
+    array_push($menus,$menu);
+
+    $key_values = array_column($menus, 'lista');
+    array_multisort($key_values, SORT_ASC, $menus);
+
+    dd($key_values); exit;
+
+
   }
 
 

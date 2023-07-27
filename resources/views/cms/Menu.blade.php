@@ -135,9 +135,8 @@
           </h4>
         </div>
 
-        <form name="validate" action="{{ url('cms/Menu') }}" method="POST" autocomplete="off">
+        <form name="validate" action="{{ url('cms/menu/agregar') }}" method="POST" autocomplete="off">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <input type="hidden" name="modulo_id" value="{{ $modulo['id'] }}">
 
           <div class="modal-body form-horizontal">
             <p>Los campos marcados con <code>*</code> son obligatorios.</p>

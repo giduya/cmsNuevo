@@ -48,6 +48,17 @@ Route::group(['prefix' => 'cms'], function () {
 
 
 
+  Route::group(['prefix' => 'menu'], function () {
+
+    Route::post('agregar', [App\Http\Controllers\DisenoController::class, 'menu']);
+
+  });
+
+
+
+
+
+
   Route::match(['post','get','patch','delete'],'/prensa/{noticiaId?}', [App\Http\Controllers\CmsController::class, 'prensa']);
 
   Route::delete('/prensa/{noticiaId}/img/{imagenNo}', [App\Http\Controllers\CmsController::class, 'prensaBorrarImg']);
