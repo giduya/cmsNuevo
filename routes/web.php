@@ -50,7 +50,7 @@ Route::group(['prefix' => 'cms'], function () {
 
   Route::group(['prefix' => 'menu'], function () {
 
-    Route::post('agregar', [App\Http\Controllers\DisenoController::class, 'menu']);
+    Route::post('{id}/{seccion}', [App\Http\Controllers\DisenoController::class, 'menu']);
 
   });
 

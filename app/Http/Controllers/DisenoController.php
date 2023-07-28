@@ -91,17 +91,17 @@ class DisenoController extends Controller
     $links = [];
 
     $css = [
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'custom',          'archivo' => 'custom.css',           'lista' => '1'],
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'responsive',          'archivo' => 'responsive.css',           'lista' => '2'],
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'color',               'archivo' => 'color.css',                'lista' => '3'],
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'all',                 'archivo' => 'all.css',                  'lista' => '4'],
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'owl_carousel_min',    'archivo' => 'owl_carousel_min.css',     'lista' => '5'],
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'bootstrap_min',       'archivo' => 'bootstrap_min.css',        'lista' => '6'],
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'prettyPhoto',         'archivo' => 'prettyPhoto.css',          'lista' => '7'],
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'slick',               'archivo' => 'slick.css',                'lista' => '8'],
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'rev_slider_settings', 'archivo' => 'rev_slider_settings.css',  'lista' => '9'],
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'rev_slider_layers',   'archivo' => 'rev_slider_layers.css',    'lista' => '10'],
-        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'navigation',          'archivo' => 'navigation.css',           'lista' => '11'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'custom',              'archivo' => 'custom.css',              'lista' => '1'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'responsive',          'archivo' => 'responsive.css',          'lista' => '2'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'color',               'archivo' => 'color.css',               'lista' => '3'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'all',                 'archivo' => 'all.css',                 'lista' => '4'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'owl_carousel_min',    'archivo' => 'owl_carousel_min.css',    'lista' => '5'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'bootstrap_min',       'archivo' => 'bootstrap_min.css',       'lista' => '6'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'prettyPhoto',         'archivo' => 'prettyPhoto.css',         'lista' => '7'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'slick',               'archivo' => 'slick.css',               'lista' => '8'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'rev_slider_settings', 'archivo' => 'rev_slider_settings.css', 'lista' => '9'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'rev_slider_layers',   'archivo' => 'rev_slider_layers.css',   'lista' => '10'],
+        ['atributos' => 'rel="stylesheet" type="text/css"', 'nombre' => 'navigation',          'archivo' => 'navigation.css',          'lista' => '11'],
     ];
 
     $js = [
@@ -161,16 +161,27 @@ class DisenoController extends Controller
 
   public function menu(Request $request)
   {
-    $menu = array('menu' => $request->input('menu'), 'slug' => '' ,'lista' => $request->input('lista'));
+    $menu = array('menu' => $request->input('menu'), 'url' => '' ,'lista' => $request->input('lista'));
 
     $menus = Config::config()['menu'];
 
     array_push($menus,$menu);
 
-    $key_values = array_column($menus, 'lista');
-    array_multisort($key_values, SORT_ASC, $menus);
+    $key_array = array_column($menus, 'lista');
 
-    dd($key_values); exit;
+    array_multisort($key_array, SORT_ASC, $menus); //or SORT_ASC
+
+    $r = Config::mongo('config',['menu' => $menus],"U");
+
+
+    if(isset($r['modifiedCount']))
+    {
+        \Session::flash('success', 'El menú se agregó correctamente.');
+
+        $this->json();
+    }
+
+    return \Redirect::to('cms/modulo/'.$request->route()->id.'/'.$request->route()->seccion);
 
 
   }

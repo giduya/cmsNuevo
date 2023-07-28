@@ -40,7 +40,7 @@
     <li class="dd-item">
       <div class="dd-handle">
         <span class="seccion">
-          {{ $menu['menu'] }}
+            {{ $menu['lista'] }}.- {{ $menu['menu'] }}
         </span>
         <ul class="panel-controls">
           <li data-original-title="Agregar Submenú" data-toggle="tooltip" data-placement="top">
@@ -135,7 +135,7 @@
           </h4>
         </div>
 
-        <form name="validate" action="{{ url('cms/menu/agregar') }}" method="POST" autocomplete="off">
+        <form name="validate" action="{{ url('cms/menu/'.request()->route('id').'/'.request()->route('seccion')) }}" method="POST" autocomplete="off">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
           <div class="modal-body form-horizontal">
