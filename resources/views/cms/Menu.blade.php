@@ -109,6 +109,35 @@
             </a>
           </li>
 
+          <li>
+            <a tabindex="{{ ++$tabindex }}" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" class="control-danger mb-control" data-box="#mbs-{{ $submenu->id }}">
+              <span class="fa fa-times"></span>
+            </a>
+            <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="mbs-{{ $submenu->id }}">
+              <div class="mb-container">
+                <div class="mb-middle">
+                  <div class="mb-title"><span class="fa fa fa-times"></span>¿ Borrar <strong>Menú</strong> ?</div>
+                  <div class="mb-content">
+                    <p>Borrar este menú eliminará los módulos, imagenes, audios, documentos, etc. vinculados a él. ¿Realmente deseas hacerlo?</p>
+                    <p>&nbsp;</p>
+                    <p>Presiona <span class="label label-danger label-form">NO</span> para cancelar la operación. Presiona <span class="label label-success label-form">SÍ</span> para eliminar el menú.</p>
+                  </div>
+                  <div class="mb-footer">
+                    <div class="pull-right">
+                      <form action="{{ URL::to('cms/Menu/'.$submenu->id) }}" method="POST">
+                        <input name="_method" type="hidden" value="DELETE">
+                        <input name="_token"  type="hidden" value="{{ csrf_token() }}">
+
+                        <button class="btn btn-success btn-lg" type="submit">Sí</button>
+                        <button class="btn btn-danger btn-lg mb-control-close">No</button>
+                      </form>
+                    </div><!--pull-right-->
+                  </div><!--mb-footer-->
+                </div><!--mb-middle-->
+              </div><!--mb-container-->
+            </div><!--id=mb-->
+          </li>
+
         </ul>
       </div>
     </li>
