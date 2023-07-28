@@ -161,7 +161,7 @@ class DisenoController extends Controller
 
   public function menu(Request $request)
   {
-    $menu = array('menu' => $request->input('menu'), 'url' => '' ,'lista' => $request->input('lista'));
+    $menu = array('menu' => $request->input('menu'), 'url' => '' ,'lista' => $request->input('lista'), 'borrar' => true);
 
     $menus = Config::config()['menu'];
 
