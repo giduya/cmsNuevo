@@ -161,28 +161,40 @@ class DisenoController extends Controller
 
   public function menu(Request $request)
   {
-    $menu = array('menu' => $request->input('menu'), 'url' => '' ,'lista' => $request->input('lista'), 'borrar' => true);
 
     $menus = Config::config()['menu'];
 
-    array_push($menus,$menu);
-
-    $key_array = array_column($menus, 'lista');
-
-    array_multisort($key_array, SORT_ASC, $menus); //or SORT_ASC
-
-    $r = Config::mongo('config',['menu' => $menus],"U");
-
-
-    if(isset($r['modifiedCount']))
+    if($request->method() == "POST")
     {
-        \Session::flash('success', 'El menú se agregó correctamente.');
+        $menu = array('menu' => $request->input('menu'), 'url' => '' ,'lista' => $request->input('lista'), 'borrar' => true);
 
-        $this->json();
+        array_push($menus,$menu);
+
+        $key_array = array_column($menus, 'lista');
+
+        array_multisort($key_array, SORT_ASC, $menus); //or SORT_ASC
+
+        $r = Config::mongo('config',['menu' => $menus],"U");
+
+
+        if(isset($r['modifiedCount']))
+        {
+            \Session::flash('success', 'El menú se agregó correctamente.');
+
+            $this->json();
+        }
+
+        return \Redirect::to('cms/modulo/'.$request->route()->id.'/'.$request->route()->seccion);
     }
 
-    return \Redirect::to('cms/modulo/'.$request->route()->id.'/'.$request->route()->seccion);
 
+
+    if($request->method() == "DELETE")
+    {
+        unset($array[$request->route()->id]);
+
+        $r = Config::mongo('maqueta',["metas" => $array,],'U');
+    }
 
   }
 
