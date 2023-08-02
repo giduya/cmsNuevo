@@ -180,21 +180,23 @@ class DisenoController extends Controller
         if(isset($r['modifiedCount']))
         {
             \Session::flash('success', 'El menú se agregó correctamente.');
-
-            $this->json();
         }
 
-        return \Redirect::to('cms/modulo/'.$request->route()->id.'/'.$request->route()->seccion);
     }
 
 
 
     if($request->method() == "DELETE")
     {
-        unset($array[$request->route()->id]);
+        unset($menus[$request->input('key')]);
 
-        $r = Config::mongo('maqueta',["metas" => $array,],'U');
+        $r = Config::mongo('config',["menu" => $menus,],'U');
     }
+
+
+    $this->json();
+
+    return \Redirect::to('cms/modulo/'.$request->route()->id.'/'.$request->route()->seccion);
 
   }
 

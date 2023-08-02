@@ -129,6 +129,7 @@
 
                         <input name="_method" type="hidden" value="DELETE">
                         <input name="_token"  type="hidden" value="{{ csrf_token() }}">
+                        <input name="key"  type="hidden" value="{{ $key }}">
 
                         <button class="btn btn-success btn-lg" type="submit">Sí</button>
                         <button class="btn btn-danger btn-lg mb-control-close">No</button>
